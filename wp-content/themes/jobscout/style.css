@@ -2205,6 +2205,12 @@ body.home:not(.banner-enabled) .site-header {
   transition: border-color 0.3s;
 }
 
+.main-navigation ul li a:hover,
+.main-navigation ul li.current-menu-item > a,
+.main-navigation ul li.active > a {
+  border-bottom: 2px solid #fe7e2e;
+}
+
 .main-navigation ul li a:hover {
   border-bottom: 2px solid #fe7e2e;
 }
