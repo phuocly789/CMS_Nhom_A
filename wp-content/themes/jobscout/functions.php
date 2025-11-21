@@ -86,3 +86,21 @@ if( jobscout_is_woocommerce_activated() ){
 if( jobscout_is_wp_job_manager_activated() ) :
 	require get_template_directory() . '/inc/wp-job-manager-filters.php';
 endif;
+
+function jobscout_custom_single_job_layout()
+{
+	// Remove default hooks
+	remove_action('jobscout_before_single_job_content', 'jobscout_get_single_job_title', 10);
+	remove_action('jobscout_before_single_job_content', 'jobscout_entry_content', 15);
+
+	// Add custom layout hooks
+	add_action('jobscout_before_single_job_content', 'jobscout_custom_job_header', 10);
+	add_action('jobscout_after_single_job_content', 'jobscout_custom_job_sections', 15);
+	add_action('jobscout_after_single_job_content', 'jobscout_other_jobs_section', 20);
+}
+
+function jobscout_custom_job_header()
+{
+	// Include custom header template
+	get_template_part('template-parts/job/custom-header');
+}
