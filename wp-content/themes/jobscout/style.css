@@ -1849,7 +1849,7 @@ COMMENTS AREA
 SIDEBARS
 =========================*/
 .site-content {
-  margin-top: 50px;
+  margin-top: 0px;
   margin-bottom: 50px;
 }
 
@@ -2206,8 +2206,8 @@ body.home:not(.banner-enabled) .site-header {
 }
 
 .main-navigation ul li a:hover,
-.main-navigation ul li.current-menu-item > a,
-.main-navigation ul li.active > a {
+.main-navigation ul li.current-menu-item>a,
+.main-navigation ul li.active>a {
   border-bottom: 2px solid #fe7e2e;
 }
 
@@ -7193,7 +7193,7 @@ RESPONSIVE STYLESHEET
   }
 
   #job-manager-job-dashboard .job-manager-jobs tr td::before {
-    content: ""attr(data-title) "";
+    content: "" attr(data-title) "";
     font-weight: 700;
     position: absolute;
     top: 0;
@@ -8579,5 +8579,135 @@ body {
 
   .other-jobs-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ABOUTS================== */
+.company-about-page img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* HERO SECTION */
+.hero {
+  height: 420px;
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-overlay h1 {
+  color: #fff;
+  font-size: 38px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ABOUT SECTION */
+.about {
+  padding: 70px 0;
+  text-align: center;
+  background: #f2f2f2;
+}
+
+.about h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.about-grid {
+  width: 85%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.about-left img {
+  border-radius: 5px;
+}
+
+.about-right h3 {
+  font-size: 20px;
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+.about-right p {
+  text-align: left;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+/* BUSINESS DESCRIPTION */
+.business-desc {
+  background: #fafafa;
+  padding: 50px 120px;
+  text-align: center;
+}
+
+.business-desc h3 {
+  color: #c97317;
+}
+
+.business-desc p {
+  max-width: 900px;
+  margin: auto;
+  line-height: 1.7;
+  font-size: 16px;
+  color: #444;
+  font-weight: 500;
+}
+
+/* COMPANY INFO */
+.company-info {
+  padding: 70px 0;
+  background: #f2f2f2;
+  text-align: center;
+}
+
+.info-grid {
+  width: 85%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.info-left p {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* RIGHT IMAGE */
+.info-right img {
+  border-radius: 5px;
+  width: 100%;
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+
+  .about-grid,
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-right p,
+  .about-right h3,
+  .info-left p {
+    text-align: center;
   }
 }
