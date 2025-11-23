@@ -8251,7 +8251,7 @@ body {
 }
 
 .job-meta-main span:not(:last-child)::after {
-  content: "•";
+  content: "â€¢";
   margin-left: 12px;
   color: #ccc;
 }
@@ -8390,10 +8390,10 @@ body {
 }
 
 /* =================================================================
-   OTHER JOBS SECTION - PHONG CÁCH MỚI
+   OTHER JOBS SECTION - PHONG CÃ�CH Má»šI
    ================================================================= */
 
-/* --- Bố cục lưới chung --- */
+/* --- Bá»‘ cá»¥c lÆ°á»›i chung --- */
 .other-jobs-section {
   margin-top: 50px;
 }
@@ -8408,30 +8408,30 @@ body {
 
 .other-jobs-grid {
   display: grid;
-  /* Hiển thị 2 cột trên màn hình lớn, 1 cột trên màn hình nhỏ */
+  /* Hiá»ƒn thá»‹ 2 cá»™t trÃªn mÃ n hÃ¬nh lá»›n, 1 cá»™t trÃªn mÃ n hÃ¬nh nhá»� */
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 30px;
 }
 
-/* --- Kiểu dáng cho mỗi thẻ công việc --- */
+/* --- Kiá»ƒu dÃ¡ng cho má»—i tháº» cÃ´ng viá»‡c --- */
 .other-job-card {
   background-color: #fff;
   border: 1px solid #eef0f2;
-  /* Viền rất nhạt */
+  /* Viá»�n ráº¥t nháº¡t */
   border-radius: 8px;
-  /* Bo góc */
+  /* Bo gÃ³c */
   padding: 24px;
   display: flex;
   gap: 20px;
   align-items: flex-start;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  /* Đổ bóng nhẹ */
+  /* Ä�á»• bÃ³ng nháº¹ */
 }
 
 .other-job-card:hover {
   transform: translateY(-5px);
-  /* Hiệu ứng nhấc lên khi hover */
+  /* Hiá»‡u á»©ng nháº¥c lÃªn khi hover */
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
@@ -8441,7 +8441,7 @@ body {
   width: 70px;
   height: 70px;
   background-color: #f5f5f5;
-  /* Màu nền xám nhạt cho logo */
+  /* MÃ u ná»�n xÃ¡m nháº¡t cho logo */
   border-radius: 6px;
   display: flex;
   justify-content: center;
@@ -8456,7 +8456,7 @@ body {
   object-fit: contain;
 }
 
-/* --- Chi tiết công việc (bên phải logo) --- */
+/* --- Chi tiáº¿t cÃ´ng viá»‡c (bÃªn pháº£i logo) --- */
 .job-card-details {
   flex-grow: 1;
 }
@@ -8474,17 +8474,17 @@ body {
 
 .job-card-title a:hover {
   color: #007bff;
-  /* Thay màu bạn thích */
+  /* Thay mÃ u báº¡n thÃ­ch */
 }
 
 .job-card-company {
   font-size: 15px;
   color: #6c757d;
-  /* Màu xám cho tên công ty */
+  /* MÃ u xÃ¡m cho tÃªn cÃ´ng ty */
   margin: 0;
 }
 
-/* --- Đường kẻ ngang --- */
+/* --- Ä�Æ°á»�ng káº» ngang --- */
 .job-card-separator {
   border: none;
   height: 1px;
@@ -8492,7 +8492,7 @@ body {
   margin: 16px 0;
 }
 
-/* --- Thông tin meta (lương, địa điểm) --- */
+/* --- ThÃ´ng tin meta (lÆ°Æ¡ng, Ä‘á»‹a Ä‘iá»ƒm) --- */
 .job-card-meta {
   display: flex;
   flex-direction: column;
@@ -8510,33 +8510,33 @@ body {
 
 .meta-item svg {
   color: #6c757d;
-  /* Màu của icon */
+  /* MÃ u cá»§a icon */
   flex-shrink: 0;
 }
 
 
-/* --- Thẻ danh mục (Category Tag) --- */
+/* --- Tháº» danh má»¥c (Category Tag) --- */
 .job-card-category .category-tag {
   display: inline-block;
   padding: 6px 15px;
   border: 1px solid #a7e0b8;
-  /* Màu viền xanh lá nhạt */
+  /* MÃ u viá»�n xanh lÃ¡ nháº¡t */
   color: #28a745;
-  /* Màu chữ xanh lá */
+  /* MÃ u chá»¯ xanh lÃ¡ */
   background-color: #f0fff4;
-  /* Màu nền xanh lá rất nhạt */
+  /* MÃ u ná»�n xanh lÃ¡ ráº¥t nháº¡t */
   border-radius: 20px;
-  /* Bo tròn thành hình viên thuốc */
+  /* Bo trÃ²n thÃ nh hÃ¬nh viÃªn thuá»‘c */
   font-size: 12px;
   font-weight: 500;
   text-transform: uppercase;
 }
 
-/* --- Responsive cho màn hình nhỏ --- */
+/* --- Responsive cho mÃ n hÃ¬nh nhá»� --- */
 @media (max-width: 480px) {
   .other-job-card {
     flex-direction: column;
-    /* Chuyển logo lên trên, nội dung xuống dưới */
+    /* Chuyá»ƒn logo lÃªn trÃªn, ná»™i dung xuá»‘ng dÆ°á»›i */
     align-items: center;
     text-align: center;
   }
@@ -8710,4 +8710,49 @@ body {
   .info-left p {
     text-align: center;
   }
+}
+
+/* Custom */
+button,
+input[type="email"] {
+  border-radius: 0 !important;
+}
+
+.footer-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 25px 0;
+}
+
+.footer-menu li {
+  display: inline-block;
+  margin: 0 15px;
+}
+
+.footer-menu a {
+  color: #333;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.footer-menu a:hover {
+  color: #ff6600;
+}
+
+.for-employers > section, .for-jobseekers > section, .headquarters > section, .contact-header > section, .for-employers > section > h3, .for-jobseekers > section > h3 {
+  margin-bottom: 0 !important;
+}
+
+.for-employers > section > p, .for-jobseekers > section > p, .headquarters > section > p {
+  margin-block-start: 0 !important;
+}
+
+.site-content {
+  margin: 0 !important;
+}
+
+.hentry {
+  margin-bottom: 0 !important;
 }
