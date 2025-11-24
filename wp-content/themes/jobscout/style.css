@@ -1856,7 +1856,7 @@ SIDEBARS
 .rightsidebar #primary {
   float: left;
   width: 75%;
-  padding-right: 40px;
+  /* padding-right: 40px; */
 }
 
 .leftsidebar #primary {
@@ -8588,7 +8588,6 @@ body {
   color: #333;
   line-height: 1.6;
   margin: 0 auto;
-  padding: 0 20px;
 }
 
 /* ========================================= */
@@ -8861,9 +8860,7 @@ body {
 /* RESPONSIVE DESIGN */
 /* ========================================= */
 @media (max-width: 768px) {
-  .company-about-page {
-    padding: 0 15px;
-  }
+
 
   .hero {
     height: 350px;
@@ -8927,6 +8924,66 @@ body {
   color: #999;
   font-style: italic;
   border: 1px dashed #ddd;
+}
+
+/* ============================================================= */
+/*  ẨN SIDEBAR HOÀN TOÀN CHỈ TRÊN TRANG ABOUT US (ID 1076)     */
+/* ============================================================= */
+.page-id-1076 #secondary,
+.page-id-1076 .widget-area {
+  display: none !important;
+}
+
+.content-area .page-id-1076 .rightsidebar {
+  padding-right: 0px !important;
+}
+
+.page-id-1076 #primary {
+  width: 100% !important;
+  max-width: 100% !important;
+  float: none !important;
+  margin: 0 auto !important;
+}
+
+.page-id-1076 .site-main {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Nếu theme của bạn dùng class .has-sidebar thì thêm dòng này nữa */
+.page-id-1076.has-sidebar #primary {
+  width: 100% !important;
+}
+
+/* Đảm bảo content full width đẹp */
+.page-id-1076 .about-us-page .container,
+.page-id-1076 .about-vision .container,
+.page-id-1076 .company-info .container {
+  max-width: 1280px;
+  padding: 0 40px;
+}
+
+@media (max-width: 768px) {
+
+  .page-id-1076 .about-vision .container,
+  .page-id-1076 .company-info .container {
+    padding: 0 20px;
+  }
+}
+
+
+.about-business-widget h3 {
+  color: #d4a017 !important;
+  /* font-style: italic !important; */
+}
+
+.about-business-widget p {
+  color: #333 !important;
+}
+.about-header-widget p {
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    color: white !important;
 }
 
 /* Custom */

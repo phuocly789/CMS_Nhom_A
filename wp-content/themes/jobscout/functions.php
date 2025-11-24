@@ -9,8 +9,10 @@
  */
 
 $jobscout_theme_data = wp_get_theme();
-if (! defined('JOBSCOUT_THEME_VERSION')) define('JOBSCOUT_THEME_VERSION', $jobscout_theme_data->get('Version'));
-if (! defined('JOBSCOUT_THEME_NAME')) define('JOBSCOUT_THEME_NAME', $jobscout_theme_data->get('Name'));
+if (!defined('JOBSCOUT_THEME_VERSION'))
+	define('JOBSCOUT_THEME_VERSION', $jobscout_theme_data->get('Version'));
+if (!defined('JOBSCOUT_THEME_NAME'))
+	define('JOBSCOUT_THEME_NAME', $jobscout_theme_data->get('Name'));
 
 /**
  * Implement Local Font Method functions.
@@ -37,7 +39,7 @@ require get_template_directory() . '/inc/template-functions.php';
  */
 require get_template_directory() . '/inc/partials.php';
 
-if (jobscout_is_rara_theme_companion_activated()) :
+if (jobscout_is_rara_theme_companion_activated()):
 	/**
 	 * Modify filter hooks of RTC plugin.
 	 */
@@ -84,7 +86,7 @@ if (jobscout_is_woocommerce_activated()) {
 /**
  * Modify filter hooks of WP Job Manager plugin.
  */
-if (jobscout_is_wp_job_manager_activated()) :
+if (jobscout_is_wp_job_manager_activated()):
 	require get_template_directory() . '/inc/wp-job-manager-filters.php';
 endif;
 
@@ -178,10 +180,10 @@ function load_more_jobs()
 	$filter = isset($_POST['filter']) ? sanitize_text_field($_POST['filter']) : 'latest';
 
 	$args = array(
-		'post_type'      => 'job_listing',
+		'post_type' => 'job_listing',
 		'posts_per_page' => 8,
-		'post_status'    => 'publish',
-		'paged'          => $page,
+		'post_status' => 'publish',
+		'paged' => $page,
 	);
 
 	// Áp dụng filter
@@ -195,8 +197,8 @@ function load_more_jobs()
 	} elseif ($filter == 'featured') {
 		$args['meta_query'] = array(
 			array(
-				'key'     => '_featured',
-				'value'   => 1,
+				'key' => '_featured',
+				'value' => 1,
 				'compare' => '=',
 			),
 		);
@@ -207,19 +209,22 @@ function load_more_jobs()
 	$jobs_query = new WP_Query($args);
 
 	$html = '';
-	if ($jobs_query->have_posts()) :
-		while ($jobs_query->have_posts()) : $jobs_query->the_post();
+	if ($jobs_query->have_posts()):
+		while ($jobs_query->have_posts()):
+			$jobs_query->the_post();
 			$company_logo = function_exists('get_the_company_logo') ? get_the_company_logo() : (has_post_thumbnail() ? get_the_post_thumbnail_url() : '');
-			$job_title    = get_the_title();
+			$job_title = get_the_title();
 			$job_location = get_post_meta(get_the_ID(), '_job_location', true) ?: 'No location';
 			$job_terms = wp_get_post_terms(get_the_ID(), 'job_listing_category', array('fields' => 'names'));
 			$job_category = (is_array($job_terms)) ? (!empty($job_terms) ? implode(', ', $job_terms) : 'Uncategorized') : 'Uncategorized';
-			$job_excerpt  = get_the_excerpt() ?: 'No description';
+			$job_excerpt = get_the_excerpt() ?: 'No description';
 
 			$html .= '<div class="job-card" style="background:#fff; padding:25px; border:1px solid #eee; box-shadow:0 2px 10px rgba(0,0,0,0.05); display:flex; gap:20px; align-items:start;">';
 			$html .= '    <div class="job-logo" style="width:80px; height:80px; background:#f0f0f0; display:flex; align-items:center; justify-content:center;">';
-			if ($company_logo) $html .= '<img src="' . $company_logo . '" alt="Logo" style="max-width:100%; max-height:100%;">';
-			else $html .= '<i class="fa fa-briefcase" style="font-size:40px; color:#ccc;"></i>';
+			if ($company_logo)
+				$html .= '<img src="' . $company_logo . '" alt="Logo" style="max-width:100%; max-height:100%;">';
+			else
+				$html .= '<i class="fa fa-briefcase" style="font-size:40px; color:#ccc;"></i>';
 			$html .= '    </div>';
 			$html .= '    <div class="job-content" style="flex:1;">';
 			$html .= '        <h3 style="font-size:22px; color:#333; margin:0 0 10px 0;">' . $job_title . '</h3>';
@@ -240,3 +245,57 @@ function load_more_jobs()
 }
 add_action('wp_ajax_load_more_jobs', 'load_more_jobs');
 add_action('wp_ajax_nopriv_load_more_jobs', 'load_more_jobs');
+
+// Register custom sidebars cho About (thêm vào functions.php, sau phần Widgets)
+function jobscout_register_about_sidebars()
+{
+	register_sidebar(array(
+		'name' => 'About Header',
+		'id' => 'about-header',
+		'description' => 'Header banner cho trang About (text/hình nền).',
+		'before_widget' => '<div class="about-header-widget" style="line-height: 1.0 !important; text-align: center; margin: 0 !important;">',  // Line-height chặt toàn bộ, margin 0
+		'after_widget' => '</div>',
+		'before_title' => '<h1 style="color: white; text-align: center; margin: 0 !important; line-height: 1.0 !important; font-size: 52px; font-weight: 900; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">',  // h1 sát, shadow
+		'after_title' => '</h1><p class="about-header-p" style="color: white; margin: 0 !important; line-height: 1.0 !important; font-size: 28px; font-weight: 400; text-shadow: 1px 1px 2px rgba(0,0,0,0.6);">',  // p sát, shadow, class để CSS nếu cần
+	));
+	register_sidebar(array(
+		'name' => 'About Image',
+		'id' => 'about-image',
+		'description' => 'Hình ảnh cho phần Vision/Mission.',
+		'before_widget' => '<div>',
+		'after_widget' => '</div>',
+	));
+	register_sidebar(array(
+		'name' => 'About Vision Mission',
+		'id' => 'about-vision-mission',
+		'description' => 'Text Vision và Mission.',
+		'before_widget' => '<div>',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 style="color: #333; margin-bottom: 20px;">',
+		'after_title' => '</h3><p style="color: #666; line-height: 1.6;">',
+	));
+	register_sidebar(array(
+		'name' => 'About Business',
+		'id' => 'about-business',
+		'description' => 'Mô tả business (Hotels, etc.).',
+		'before_widget' => '<div class="about-business-widget" style="text-align: center; margin-bottom: 20px;">',  // Thêm class
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="about-business-title">',  // Class cho h3
+		'after_title' => '</h3><p class="about-business-desc">',  // Class cho p
+	));
+	register_sidebar(array(
+		'name' => 'About Team',
+		'id' => 'about-team',
+		'description' => 'Thông tin team/office (địa chỉ, CEO).',
+		'before_widget' => '<div>',
+		'after_widget' => '</div>',
+	));
+	register_sidebar(array(
+		'name' => 'About Team Image',
+		'id' => 'about-team-image',
+		'description' => 'Hình ảnh team (thuyền biển).',
+		'before_widget' => '<div>',
+		'after_widget' => '</div>',
+	));
+}
+add_action('widgets_init', 'jobscout_register_about_sidebars');
