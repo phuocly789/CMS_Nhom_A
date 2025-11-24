@@ -47,6 +47,36 @@ function jobscout_widgets_init(){
             'name'        => __( 'Footer Four', 'jobscout' ),
             'id'          => 'footer-four', 
             'description' => __( 'Add footer four widgets here.', 'jobscout' ),
+        ),
+        'social-links'=> array(
+            'name'        => __( 'Social Links', 'jobscout' ),
+            'id'          => 'social-links', 
+            'description' => __( 'Add social links widgets here.', 'jobscout' ),
+        ),
+        'contact-one'=> array(
+            'name'        => __( 'Contact One', 'jobscout' ),
+            'id'          => 'contact-one', 
+            'description' => __( 'Add contact one widgets here.', 'jobscout' ),
+        ),
+        'contact-two'=> array(
+            'name'        => __( 'Contact Two', 'jobscout' ),
+            'id'          => 'contact-two', 
+            'description' => __( 'Add contact two widgets here.', 'jobscout' ),
+        ),
+        'contact-address'=> array(
+            'name'        => __( 'Contact Address', 'jobscout' ),
+            'id'          => 'contact-address', 
+            'description' => __( 'Add contact address widgets here.', 'jobscout' ),
+        ),
+        'contact-header'=> array(
+            'name'        => __( 'Contact Header', 'jobscout' ),
+            'id'          => 'contact-header', 
+            'description' => __( 'Add contact header widgets here.', 'jobscout' ),
+        ),
+        'jobs-header'=> array(
+            'name'        => __( 'Jobs Header', 'jobscout' ),
+            'id'          => 'jobs-header', 
+            'description' => __( 'Add jobs header widgets here.', 'jobscout' ),
         )
     );
     
