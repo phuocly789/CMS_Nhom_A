@@ -516,7 +516,8 @@ if (! function_exists('jobscout_header')) :
             <div class="container" style="display:flex;align-items: center;">
                 <h3 style="width: 200px;">Subscribe To<br>Our Newsletter</h3>
                 <form action="#" method="post" style="display: flex; align-items: center; gap: 10px;flex:1;">
-                    <input type="email" placeholder="Input your email address" style="padding: 10px; width: 300px; border: none;flex:1;">
+                    <input type="email" placeholder="Input your email address" style="position: relative; ;padding: 10px; width: 300px; border: none;flex:1;text-indent: 48px;">
+                    <i class="fa fa-envelope-o" style="font-size: 24px ;position: absolute; padding: 10px; min-width: 40px; color: orange;"></i>
                     <button type="submit" style="padding: 10px 20px; background-color: transparent; color: white; border: 1px solid white; cursor: pointer;">SUBSCRIBE</button>
                 </form>
             </div>
@@ -563,7 +564,7 @@ if (! function_exists('jobscout_header')) :
                 }
 
                 if ($active_sidebars) { ?>
-            <div class="footer-t">
+            <!-- <div class="footer-t">
                 <div class="container">
                     <div class="grid column-<?php echo esc_attr($sidebar_count); ?>">
                         <?php foreach ($active_sidebars as $active) { ?>
@@ -573,7 +574,7 @@ if (! function_exists('jobscout_header')) :
                         <?php } ?>
                     </div>
                 </div>
-            </div>
+            </div> -->
         <?php
                 }
             }

@@ -59,11 +59,15 @@ elseif (get_the_ID() == 10) : ?>
                         <!-- Tiêu đề + Dropdown Filter -->
                         <div class="jobs-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
                             <h2 style="font-size:32px; color:#333; margin:0;">ALL JOBS</h2>
-                            <select id="jobs-filter" style="padding:10px 20px; border:1px solid #ddd; background:#fff; font-size:16px; cursor:pointer;width: auto !important;">
-                                <option value="latest">Latest Jobs</option>
-                                <option value="popular">Popular Jobs</option>
-                                <option value="featured">Featured Jobs</option>
-                            </select>
+                            <div class="custom-select-wrapper" style="position:relative; width:auto;">
+                                <select id="jobs-filter" style="padding:10px 40px 10px 20px; border:1px solid #ddd; background:#fff; font-size:16px; cursor:pointer; width:auto !important; appearance:none; -webkit-appearance:none; -moz-appearance:none;">
+                                    <option value="latest">Latest Jobs</option>
+                                    <option value="popular">Popular Jobs</option>
+                                    <option value="featured">Featured Jobs</option>
+                                </select>
+                                <!-- Icon arrow down (sử dụng Font Awesome nếu có, hoặc CSS pure) -->
+                                <i class="fa fa-chevron-down" style="position:absolute; right:15px; top:50%; transform:translateY(-50%); color:#666; pointer-events:none; font-size:14px;"></i>
+                            </div>
                         </div>
 
                         <!-- Grid danh sách jobs (sẽ reload bằng AJAX) -->
@@ -133,8 +137,7 @@ elseif (get_the_ID() == 10) : ?>
                         <!-- Load More Button -->
                         <div class="load-more" style="text-align:center; margin-top:50px;">
                             <?php if ($jobs_query->max_num_pages > 1) : ?>
-                                <button id="load-more-jobs" data-page="1" data-max-pages="<?php echo $jobs_query->max_num_pages; ?>" data-filter="<?php echo $filter; ?>"
-                                    style="padding:15px 40px; background:#ff6600; color:#fff; border:none; font-weight:bold; cursor:pointer; text-transform:uppercase; border-radius:5px;">
+                                <button id="load-more-jobs" data-page="1" data-max-pages="<?php echo $jobs_query->max_num_pages; ?>" data-filter="<?php echo $filter; ?>" style="padding: 10px 20px; background-color: transparent; color: orange; border: 1px solid orange; cursor: pointer;">
                                     LOAD MORE JOBS
                                 </button>
                             <?php endif; ?>
