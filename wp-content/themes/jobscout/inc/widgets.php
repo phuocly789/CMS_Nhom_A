@@ -77,6 +77,11 @@ function jobscout_widgets_init(){
             'name'        => __( 'Jobs Header', 'jobscout' ),
             'id'          => 'jobs-header', 
             'description' => __( 'Add jobs header widgets here.', 'jobscout' ),
+        ),
+        'news-header'=> array(
+            'name'        => __( 'News Header', 'jobscout' ),
+            'id'          => 'news-header', 
+            'description' => __( 'Add news header widgets here.', 'jobscout' ),
         )
     );
     
