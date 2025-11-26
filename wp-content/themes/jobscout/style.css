@@ -3156,38 +3156,97 @@ section[class*="-section"] .widget_raratheme_companion_cta_widget .right .button
 ARTICLE SECTION
 ===========================*/
 section.article-section {
-  margin: 70px 0;
   text-align: center;
+  background: #f5f5f5;
+  padding: 60px 0;
 }
 
 .article-section .article-wrap {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 30px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 40px;
   text-align: left;
   margin-top: 50px;
   margin-bottom: 40px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .article-section .article-wrap article {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
-  border-radius: 5px;
-  /*overflow: hidden;*/
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: row;
+}
+
+.article-section .article-wrap article:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.article-section .article-wrap article .post-thumbnail {
+  width: 280px;
+  min-width: 280px;
+  height: 100%;
+  display: block;
+  padding: 10px;
 }
 
 .article-section .article-wrap article img {
   width: 100%;
+  height: 100%;
+  min-height: 220px;
+  object-fit: cover;
+  display: block;
 }
 
-.article-section .article-wrap header.entry-header {
+.article-section .article-wrap .post-content-wrap {
   padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1;
+  justify-content: center;
 }
 
-.article-section .article-wrap header.entry-header .entry-title {
-  margin: 10px 0 0 0;
-  line-height: 1.5;
-  font-size: 1.112em;
+.article-section .article-wrap .entry-title {
+  margin: 0;
+  line-height: 1.4;
+  font-size: 1.25em;
   font-weight: 700;
+}
+
+.article-section .article-wrap .entry-title a {
+  color: #222;
+  text-decoration: none;
+}
+
+.article-section .article-wrap .entry-title a:hover {
+  color: #e8833a;
+}
+
+.article-section .article-wrap .entry-excerpt {
+  color: #666;
+  font-size: 0.95em;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.article-section .article-wrap .read-more-btn {
+  display: inline-block;
+  color: #e8833a;
+  font-weight: 600;
+  font-size: 0.9em;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.article-section .article-wrap .read-more-btn:hover {
+  color: #d47329;
 }
 
 /*=========================
@@ -6716,11 +6775,13 @@ RESPONSIVE STYLESHEET
 	ARTICLE SECTION
 	==========================*/
   .article-section .article-wrap {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 30px;
   }
-
-  .article-section .article-wrap article:last-child {
-    display: none;
+  
+  .article-section .article-wrap article .post-thumbnail {
+    width: 240px;
+    min-width: 240px;
   }
 
   /*===========================
@@ -6988,10 +7049,22 @@ RESPONSIVE STYLESHEET
   .article-section .article-wrap {
     grid-template-columns: repeat(1, 1fr);
     margin-top: 30px;
+    grid-gap: 25px;
   }
-
-  .article-section .article-wrap article:last-child {
-    display: block;
+  
+  .article-section .article-wrap article {
+    flex-direction: column;
+  }
+  
+  .article-section .article-wrap article .post-thumbnail {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+  }
+  
+  .article-section .article-wrap article img {
+    height: 200px;
+    min-height: 200px;
   }
 
   /*===========================
