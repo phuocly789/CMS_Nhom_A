@@ -3250,6 +3250,33 @@ section.article-section {
 }
 
 /*=========================
+SUBCRIBE SECTION
+=========================*/
+.newsletter {
+  background-color: #fe7e2e !important;
+}
+
+.newsletter .container {
+  max-width: 900px;
+}
+
+.newsletter .container h3 {
+  text-align: left;
+}
+
+.newsletter input[type="email"],
+.newsletter button {
+    height: 48px;           /* bạn đổi tùy ý */
+    padding: 0 16px;        /* tạo khoảng bên trong */
+    box-sizing: border-box; /* đảm bảo đúng chiều cao */
+}
+
+.newsletter button:hover {
+  color: #fe7e2e !important;
+  background-color: #fff !important;
+}
+
+/*=========================
 TESTIMONIAL SECTION
 =========================*/
 section.testimonial-section:after {
