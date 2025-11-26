@@ -3277,6 +3277,32 @@ SUBCRIBE SECTION
 }
 
 /*=========================
+FOOTER COPYRIGHT SECTION
+=========================*/
+/* Ẩn toàn bộ phần text thừa */
+.footer-b .copyright {
+  text-align: center;   /* Căn giữa */
+}
+
+.footer-b .copyright a,
+.footer-b .copyright .author-link,
+.footer-b .copyright .wp-link {
+  display: none !important;
+}
+
+/* Ẩn đoạn "JobScout | Developed By ..." */
+.footer-b .copyright {
+  font-size: 0; /* Ẩn toàn bộ text khác */
+}
+
+/* Hiện riêng phần muốn giữ lại */
+.footer-b .copyright .copyright-text {
+  font-size: 16px;      /* Cho chữ hiện lại */
+  color: #fff;
+}
+
+
+/*=========================
 TESTIMONIAL SECTION
 =========================*/
 section.testimonial-section:after {
