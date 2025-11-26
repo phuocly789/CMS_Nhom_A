@@ -4934,7 +4934,7 @@ WIDGET CALL TO ACTION
 }
 
 .widget_raratheme_companion_cta_widget .raratheme-cta-container {
-  max-width: 590px;
+  max-width: 820px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -4946,10 +4946,10 @@ WIDGET CALL TO ACTION
 .widget_raratheme_companion_cta_widget .widget-title {
   font-size: 1.7223em;
   color: #fff;
-  font-weight: 800;
+  font-weight: 700;
   margin-top: 0;
   margin-bottom: 0;
-  line-height: 1.5;
+  line-height: 2.5;
 }
 
 #secondary .widget_raratheme_companion_cta_widget .widget-title {
@@ -4967,21 +4967,27 @@ WIDGET CALL TO ACTION
   margin-bottom: 30px;
 }
 
+.widget_raratheme_companion_cta_widget .text-holder p br {
+  content: "";
+  display: block;
+  margin-bottom: 30px; /* khoảng cách giữa các dòng */
+  line-height: 1.5;    /* tùy chỉnh khoảng cách dòng */
+}
+
+
 .widget_raratheme_companion_cta_widget a.btn-cta {
   display: inline-block;
-  background: #2ace5e;
-  border: 1px solid #2ace5e;
+  border: 1.5px solid #fff;
   color: #fff;
   font-weight: 700;
   margin: 5px;
   font-size: 0.888em;
-  border-radius: 5px;
   padding: 10px 18px;
 }
 
 .widget_raratheme_companion_cta_widget a.btn-cta:hover {
-  background: none;
-  color: #2ace5e;
+  background: #fff;
+  color: #000;
 }
 
 .widget_raratheme_companion_cta_widget .text a.btn-cta {
