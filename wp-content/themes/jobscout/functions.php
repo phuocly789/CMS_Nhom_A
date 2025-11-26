@@ -181,7 +181,7 @@ function load_more_jobs()
 
 	$args = array(
 		'post_type' => 'job_listing',
-		'posts_per_page' => 8,
+		'posts_per_page' => 6,
 		'post_status' => 'publish',
 		'paged' => $page,
 	);
@@ -314,4 +314,9 @@ function jobscout_add_search_button_text() {
     <?php
 }
 add_action('wp_footer', 'jobscout_add_search_button_text');
+
+add_filter( 'job_manager_get_listings_args', function( $args ) {
+    $args['posts_per_page'] = 6; // Số job hiển thị
+    return $args;
+});
 
