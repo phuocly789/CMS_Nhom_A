@@ -299,3 +299,19 @@ function jobscout_register_about_sidebars()
 	));
 }
 add_action('widgets_init', 'jobscout_register_about_sidebars');
+
+// Thêm chữ "SEARCH JOB" vào nút tìm kiếm banner home
+function jobscout_add_search_button_text() {
+    ?>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const submitBtn = document.querySelector('.banner-caption .jobscout_job_filters .search_jobs input[type="submit"]');
+        if (submitBtn) {
+            submitBtn.value = 'SEARCH JOB'; // gán chữ bạn muốn
+        }
+    });
+    </script>
+    <?php
+}
+add_action('wp_footer', 'jobscout_add_search_button_text');
+
