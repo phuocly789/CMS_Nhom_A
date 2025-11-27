@@ -16,7 +16,7 @@ $ed_blog      = get_theme_mod( 'ed_blog', true );
 $args = array(
     'post_type'           => 'post',
     'post_status'         => 'publish',
-    'posts_per_page'      => 3,
+    'posts_per_page'      => 4,
     'ignore_sticky_posts' => true
 );
 
@@ -47,17 +47,15 @@ if( $ed_blog && ( $blog_heading || $sub_title || $qry->have_posts() ) ){ ?>
                             ?>                        
                             </a>
                         </figure>
-                        <header class="entry-header">
-                            <div class="entry-meta">
-                                <?php 
-                                    if( ! $hide_author ) jobscout_posted_by(); 
-                                    if( ! $hide_date ) jobscout_posted_on();
-                                ?> 
-                            </div>
+                        <div class="post-content-wrap">
                             <h3 class="entry-title">
                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                             </h3>
-                        </header>
+                            <div class="entry-excerpt">
+                                <?php echo wp_trim_words( get_the_excerpt(), 20, '...' ); ?>
+                            </div>
+                            <a href="<?php the_permalink(); ?>" class="read-more-btn">Read More</a>
+                        </div>
         			</article>			
         			<?php 
                 }
