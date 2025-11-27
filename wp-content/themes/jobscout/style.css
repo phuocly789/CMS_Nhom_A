@@ -9545,8 +9545,39 @@ input[type="email"] {
 
 .site-content {
   margin: 0 !important;
+  background: #f2f2f2;
 }
 
 .hentry {
   margin-bottom: 0 !important;
+}
+
+/*Detail
+/* Ẩn sidebar trên single post/blog chi tiết */
+.single .widget-area,
+.single #secondary {
+  display: none !important;
+}
+
+/* Nếu cần responsive, giữ sidebar trên mobile nếu muốn */
+@media (min-width: 768px) {
+  .single #secondary {
+    display: none !important;
+  }
+}
+
+.breadcrumb-wrap .container {
+  margin: 0 245px !important;
+}
+
+.breadcrumb-wrap .container #crumbs span {
+  color: #d4a017 !important;
+}
+
+
+
+.btn-share:hover {
+  background: #d4a017;
+  color: #fff;
+  transition: 0.3s;
 }

@@ -442,3 +442,21 @@ add_filter( 'job_manager_get_listings_args', function( $args ) {
     return $args;
 });
 
+// Override breadcrumb để chỉ hiện trên single post
+function jobscout_conditional_breadcrumbs_bar()
+{
+	if (is_single()) {  // Chỉ hiện trên chi tiết bài viết
+		jobscout_breadcrumbs_bar();  // Gọi function breadcrumb gốc
+	}
+}
+remove_action('jobscout_after_header', 'jobscout_breadcrumbs_bar', 30);  // Xóa hook cũ
+add_action('jobscout_after_header', 'jobscout_conditional_breadcrumbs_bar', 30);  // Add hook mới
+
+// Ẩn post navigation trên single post
+function hide_post_navigation_on_single()
+{
+	if (is_single()) {
+		remove_action('jobscout_after_post_content', 'jobscout_navigation', 10);  // Xóa hook navigation (dựa trên template-functions.php)
+	}
+}
+add_action('wp', 'hide_post_navigation_on_single');
