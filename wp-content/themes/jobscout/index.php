@@ -13,6 +13,7 @@
  * @package JobScout
  */
 
+
 get_header(); ?>
 
 <div id="primary" class="content-area" style="width: 100%; padding: 0;">

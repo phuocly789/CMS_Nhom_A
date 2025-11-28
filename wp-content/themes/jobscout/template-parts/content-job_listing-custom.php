@@ -5,58 +5,60 @@
  *
  * File: content-job_listing-custom.php
  */
+$company_logo = function_exists('get_the_company_logo') ? get_the_company_logo() : '';
+$job_location = get_post_meta(get_the_ID(), '_job_location', true) ?: 'Ho Chi Minh City';
 
-global $post;
-$salary   = get_post_meta(get_the_ID(), '_job_salary', true);
+$job_type_terms = wp_get_post_terms(get_the_ID(), 'job_listing_type', array('fields' => 'names'));
+$job_type = (!is_wp_error($job_type_terms) && !empty($job_type_terms)) ? $job_type_terms[0] : 'Fulltime';
+
+$job_category_terms = wp_get_post_terms(get_the_ID(), 'job_listing_category', array('fields' => 'names'));
+$job_category = (!is_wp_error($job_category_terms) && !empty($job_category_terms)) ? $job_category_terms[0] : 'Category Name';
+
+$job_excerpt = get_the_excerpt();
+$post_date = get_the_date('M d, Y');
+
+// Tạo bullets giống homepage
+$bullets = preg_split('/[\r\n]+/', strip_tags($job_excerpt), -1, PREG_SPLIT_NO_EMPTY);
+if (count($bullets) < 3) {
+    $bullets = array(
+        'Be responsible for the effective operational management of the hotel',
+        'Excellent salary bonuses & recognition activities',
+        'Foreign language allowance (up to 500USD/month)'
+    );
+} else {
+    $bullets = array_slice($bullets, 0, 3);
+}
 ?>
-<a href="<?php the_job_permalink(); ?>" class="oj-card">
-    <article class="oj-card-inner">
 
-        <!-- Logo -->
-        <div class="oj-card-logo">
-            <?php the_company_logo('thumbnail'); ?>
+<div class="top-job-card">
+    <div class="top-job-card-header">
+        <div class="top-job-logo">
+            <?php if ($company_logo) : ?>
+                <img src="<?php echo esc_url($company_logo); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+            <?php else : ?>
+                <div class="logo-placeholder">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+            <?php endif; ?>
         </div>
 
-        <!-- Main Content -->
-        <div class="oj-card-body">
+        <div class="top-job-info">
+            <h3 class="top-job-title">
+                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+            </h3>
+            <p class="top-job-date">Created: <?php echo esc_html($post_date); ?></p>
 
-            <div> <!-- Wrapper for top content -->
-                <h3 class="oj-title"><?php the_title(); ?></h3>
-                <div class="oj-company"><?php the_company_name('@ '); ?></div>
+            <div class="top-job-meta">
+                <span class="meta-badge"><?php echo esc_html($job_type); ?></span>
+                <span class="meta-badge"><?php echo esc_html($job_category); ?></span>
+                <span class="meta-badge"><?php echo esc_html($job_location); ?></span>
             </div>
-
-            <hr class="oj-separator">
-
-            <div class="oj-meta-row"> <!-- Wrapper for meta info -->
-                <?php if ($salary): ?>
-                    <span class="oj-meta">
-                        <i class="fas fa-dollar-sign"></i> <!-- FontAwesome Icon -->
-                        <?php echo esc_html($salary); ?>
-                    </span>
-                <?php endif; ?>
-
-                <span class="oj-meta">
-                    <i class="fas fa-map-marker-alt"></i> <!-- FontAwesome Icon -->
-                    <?php the_job_location(false); ?>
-                </span>
-            </div>
-
-            <div class="oj-badge-wrapper">
-                <?php
-                // Ưu tiên hiển thị Job Category, nếu không có thì fallback ra Job Type
-                $cats = get_the_terms(get_the_ID(), 'job_listing_category');
-                if ($cats && ! is_wp_error($cats)) {
-                    echo '<span class="oj-badge">' . esc_html($cats[0]->name) . '</span>';
-                } else {
-                    $types = wpjm_get_the_job_types();
-                    if (!empty($types)) {
-                        echo '<span class="oj-badge">' . esc_html($types[0]->name) . '</span>';
-                    }
-                }
-                ?>
-            </div>
-
         </div>
+    </div>
 
-    </article>
-</a>
+    <ul class="top-job-bullets">
+        <?php foreach ($bullets as $bullet) : ?>
+            <li><?php echo esc_html($bullet); ?></li>
+        <?php endforeach; ?>
+    </ul>
+</div>
