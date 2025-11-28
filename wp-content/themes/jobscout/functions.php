@@ -218,19 +218,54 @@ function load_more_jobs()
 			$job_terms = wp_get_post_terms(get_the_ID(), 'job_listing_category', array('fields' => 'names'));
 			$job_category = (is_array($job_terms)) ? (!empty($job_terms) ? implode(', ', $job_terms) : 'Uncategorized') : 'Uncategorized';
 			$job_excerpt = get_the_excerpt() ?: 'No description';
+			$created_date = get_the_date('M d, Y'); // Lấy ngày tạo bài viết
+			$job_type_terms = wp_get_post_terms(get_the_ID(), 'job_listing_type', array('fields' => 'names')); // Giả sử sử dụng taxonomy job_listing_type cho loại việc làm
+			$job_type = !empty($job_type_terms) ? implode(', ', $job_type_terms) : 'Fulltime'; // Default nếu không có
+			// Để hiển thị excerpt dưới dạng bullet points, tách bằng dấu chấm (.) để lấy câu
+			$excerpt_parts = explode('.', trim($job_excerpt));
+			$excerpt_lines = [];
+			foreach ($excerpt_parts as $part) {
+				$part = trim($part);
+				if ($part) {
+					$excerpt_lines[] = $part;
+				}
+			}
+			$excerpt_lines = array_slice($excerpt_lines, 0, 3); // Chỉ lấy 3 câu đầu tiên
 
-			$html .= '<div class="job-card" style="background:#fff; padding:25px; border:1px solid #eee; box-shadow:0 2px 10px rgba(0,0,0,0.05); display:flex; gap:20px; align-items:start;">';
-			$html .= '    <div class="job-logo" style="width:80px; height:80px; background:#f0f0f0; display:flex; align-items:center; justify-content:center;">';
-			if ($company_logo)
-				$html .= '<img src="' . $company_logo . '" alt="Logo" style="max-width:100%; max-height:100%;">';
-			else
-				$html .= '<i class="fa fa-briefcase" style="font-size:40px; color:#ccc;"></i>';
-			$html .= '    </div>';
-			$html .= '    <div class="job-content" style="flex:1;">';
-			$html .= '        <h3 style="font-size:22px; color:#333; margin:0 0 10px 0;">' . $job_title . '</h3>';
-			$html .= '        <p style="font-size:16px; color:#666; margin:0 0 10px 0;">' . $job_category . ' / ' . $job_location . '</p>';
-			$html .= '        <p style="font-size:15px; color:#555; line-height:1.6; margin:0;">' . wp_trim_words($job_excerpt, 30) . '</p>';
-			$html .= '    </div>';
+			$html .= '<div class="job-card" style="background:#fff; padding:20px; border:1px solid #eee; box-shadow:0 2px 10px rgba(0,0,0,0.05); display:flex; gap:20px; align-items:flex-start; max-width:600px; flex-wrap: wrap;">';
+			$html .= '	<div style="display: flex; justify-content: center; align-items: center;width: 100%;">';
+			$html .= '		<div class="job-logo" style="width:100px; height:auto; display:flex; align-items:center; justify-content:center;">';
+			if ($company_logo):
+				$html .= '			<img src="' . esc_url($company_logo) . '" alt="' . esc_attr($job_title) . '" style="max-width:100%;">';
+			else:
+				$html .= '			<i class="fa fa-briefcase" style="font-size:40px; color:#ccc;"></i>';
+			endif;
+			$html .= '		</div>';
+			$html .= '		<div class="job-content" style="flex:1;">';
+			$html .= '			<h3 style="font-size:24px; color:#333; margin:0 0 5px 0; text-transform:uppercase;">';
+			$html .= '				<a href="' . get_the_permalink() . '" class="job-title-link" style="color:#333 !important; text-decoration:none;">';
+			$html .= '					' . esc_html($job_title);
+			$html .= '				</a>';
+			$html .= '			</h3>';
+			$html .= '			<p style="font-size:14px; color:#666; margin:0 0 10px 0;">';
+			$html .= '				Created: ' . esc_html($created_date);
+			$html .= '			</p>';
+			$html .= '			<div class="top-job-meta">';
+			$html .= '				<span class="meta-badge">' . esc_html($job_type) . '</span>';
+			$html .= '				<span class="meta-badge">' . esc_html($job_category) . '</span>';
+			$html .= '				<span class="meta-badge">' . esc_html($job_location) . '</span>';
+			$html .= '			</div>';
+			$html .= '		</div>';
+			$html .= '	</div>';
+			$html .= '	<ul style="height: fit-content; list-style-type:disc; padding-left:20px; margin:0; font-size:14px; color:#555; line-height:1.6;">';
+			if (!empty($excerpt_lines)):
+				foreach ($excerpt_lines as $line):
+					$html .= '		<li>' . esc_html($line) . '</li>';
+				endforeach;
+			else:
+				$html .= '		<li>No description available</li>';
+			endif;
+			$html .= '	</ul>';
 			$html .= '</div>';
 		endwhile;
 		wp_reset_postdata();
@@ -302,7 +337,7 @@ function load_all_jobs()
 	if ($jobs_query->have_posts()):
 		while ($jobs_query->have_posts()):
 			$jobs_query->the_post();
-			$company_logo = function_exists('get_the_company_logo') ? get_the_company_logo() : '';
+			$company_logo = function_exists('get_the_company_logo') ? get_the_company_logo() : (has_post_thumbnail() ? get_the_post_thumbnail_url() : '');
 			$job_location = get_post_meta(get_the_ID(), '_job_location', true) ?: 'Ho Chi Minh City';
 			$job_type_terms = wp_get_post_terms(get_the_ID(), 'job_listing_type', array('fields' => 'names'));
 			$job_type = (!is_wp_error($job_type_terms) && !empty($job_type_terms)) ? $job_type_terms[0] : 'Fulltime';
@@ -311,20 +346,22 @@ function load_all_jobs()
 			$job_excerpt = get_the_excerpt();
 			$post_date = get_the_date('M d, Y');
 
+			// Normalize by inserting period before capital letters if stuck (camelcase fix)
+			$job_excerpt = preg_replace('/([a-z0-9])([A-Z])/', '$1. $2', trim($job_excerpt));
+
 			// Parse excerpt into bullet points
-			$bullets = preg_split('/[\r\n]+/', strip_tags($job_excerpt), -1, PREG_SPLIT_NO_EMPTY);
-			if (count($bullets) < 3) {
-				$bullets = array(
-					'Be responsible for the effective operational management of the hotel',
-					'Excellent salary bonuses & recognition activities',
-					'Foreign language allowance (up to 500USD/month)'
-				);
-			} else {
-				$bullets = array_slice($bullets, 0, 3);
+			$excerpt_parts = explode('.', $job_excerpt);
+			$bullets = [];
+			foreach ($excerpt_parts as $part) {
+				$part = trim($part);
+				if ($part) {
+					$bullets[] = $part;
+				}
 			}
+			$bullets = array_slice($bullets, 0, 3);
 
 			ob_start();
-			?>
+?>
 			<div class="top-job-card">
 				<div class="top-job-card-header">
 					<div class="top-job-logo">
@@ -349,12 +386,16 @@ function load_all_jobs()
 					</div>
 				</div>
 				<ul class="top-job-bullets">
-					<?php foreach ($bullets as $bullet): ?>
-						<li><?php echo esc_html($bullet); ?></li>
-					<?php endforeach; ?>
+					<?php if (!empty($bullets)): ?>
+						<?php foreach ($bullets as $bullet): ?>
+							<li><?php echo esc_html($bullet); ?></li>
+						<?php endforeach; ?>
+					<?php else: ?>
+						<li>No description available</li>
+					<?php endif; ?>
 				</ul>
 			</div>
-			<?php
+	<?php
 			$html .= ob_get_clean();
 		endwhile;
 		wp_reset_postdata();
@@ -429,14 +470,14 @@ function jobscout_add_search_button_text()
 {
 	?>
 	<script>
-		document.addEventListener('DOMContentLoaded', function () {
+		document.addEventListener('DOMContentLoaded', function() {
 			const submitBtn = document.querySelector('.banner-caption .jobscout_job_filters .search_jobs input[type="submit"]');
 			if (submitBtn) {
 				submitBtn.value = 'SEARCH JOB'; // gán chữ bạn muốn
 			}
 		});
 	</script>
-	<?php
+<?php
 }
 add_action('wp_footer', 'jobscout_add_search_button_text');
 

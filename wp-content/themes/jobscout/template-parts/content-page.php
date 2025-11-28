@@ -42,8 +42,8 @@ if (get_the_ID() == 6): ?>
         </main>
     </div>
 
-    <?php
-    // === NẾU KHÔNG PHẢI TRANG ID = 6 → DÙNG GIAO DIỆN MẶC ĐỊNH CỦA THEME ===
+<?php
+// === NẾU KHÔNG PHẢI TRANG ID = 6 → DÙNG GIAO DIỆN MẶC ĐỊNH CỦA THEME ===
 
 elseif (get_the_ID() == 10): ?>
     <div id="primary" class="content-area">
@@ -120,30 +120,56 @@ elseif (get_the_ID() == 10): ?>
                                     $job_terms = wp_get_post_terms(get_the_ID(), 'job_listing_category', array('fields' => 'names'));
                                     $job_category = (is_array($job_terms)) ? (!empty($job_terms) ? implode(', ', $job_terms) : 'Uncategorized') : 'Uncategorized';
                                     $job_excerpt = get_the_excerpt() ?: 'No description';
-                                    ?>
-                                    <div class="job-card"
-                                        style="background:#fff; padding:25px; border:1px solid #eee; box-shadow:0 2px 10px rgba(0,0,0,0.05); display:flex; gap:20px; align-items:start;">
-                                        <div class="job-logo"
-                                            style="width:80px; height:80px; background:#f0f0f0; display:flex; align-items:center; justify-content:center;">
-                                            <?php if ($company_logo): ?><img src="<?php echo $company_logo; ?>" alt="Logo"
-                                                    style="max-width:100%; max-height:100%;"><?php else: ?><i class="fa fa-briefcase"
-                                                    style="font-size:40px; color:#ccc;"></i><?php endif; ?>
+                                    $created_date = get_the_date('M d, Y'); // Lấy ngày tạo bài viết
+                                    $job_type_terms = wp_get_post_terms(get_the_ID(), 'job_listing_type', array('fields' => 'names')); // Giả sử sử dụng taxonomy job_listing_type cho loại việc làm
+                                    $job_type = !empty($job_type_terms) ? implode(', ', $job_type_terms) : 'Fulltime'; // Default nếu không có
+                                    // Để hiển thị excerpt dưới dạng bullet points, tách bằng dấu chấm (.) để lấy câu
+                                    $excerpt_parts = explode('.', trim($job_excerpt));
+                                    $excerpt_lines = [];
+                                    foreach ($excerpt_parts as $part) {
+                                        $part = trim($part);
+                                        if ($part) {
+                                            $excerpt_lines[] = $part;
+                                        }
+                                    }
+                                    $excerpt_lines = array_slice($excerpt_lines, 0, 3); // Chỉ lấy 3 câu đầu tiên
+                            ?>
+                                    <div class="job-card" style="background:#fff; padding:20px; border:1px solid #eee; box-shadow:0 2px 10px rgba(0,0,0,0.05); display:flex; gap:20px; align-items:flex-start; max-width:600px; flex-wrap: wrap;">
+                                        <div style="display: flex; justify-content: center; align-items: center;width: 100%;">
+                                            <div class="job-logo" style="width:100px; height:auto; display:flex; align-items:center; justify-content:center;">
+                                                <?php if ($company_logo): ?>
+                                                    <img src="<?php echo esc_url($company_logo); ?>" alt="<?php echo esc_attr($job_title); ?>" style="max-width:100%;">
+                                                <?php else: ?>
+                                                    <i class="fa fa-briefcase" style="font-size:40px; color:#ccc;"></i>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="job-content" style="flex:1;">
+                                                <h3 style="font-size:24px; color:#333; margin:0 0 5px 0; text-transform:uppercase;">
+                                                    <a href="<?php the_permalink(); ?>" class="job-title-link" style="color:#333 !important; text-decoration:none;">
+                                                        <?php echo esc_html($job_title); ?>
+                                                    </a>
+                                                </h3>
+                                                <p style="font-size:14px; color:#666; margin:0 0 10px 0;">
+                                                    Created: <?php echo esc_html($created_date); ?>
+                                                </p>
+                                                <div class="top-job-meta">
+                                                    <span class="meta-badge"><?php echo esc_html($job_type); ?></span>
+                                                    <span class="meta-badge"><?php echo esc_html($job_category); ?></span>
+                                                    <span class="meta-badge"><?php echo esc_html($job_location); ?></span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="job-content" style="flex:1;">
-                                            <h3 style="font-size:22px; color: black; margin:0 0 10px 0;">
-                                                <a href="<?php the_permalink(); ?>" class="job-title-link" style="color: black !important;">
-                                                    <?php echo esc_html($job_title); ?>
-                                                </a>
-                                            </h3>
-                                            <p style="font-size:16px; color:#666; margin:0 0 10px 0;"><?php echo $job_category; ?> /
-                                                <?php echo $job_location; ?>
-                                            </p>
-                                            <p style="font-size:15px; color:#555; line-height:1.6; margin:0;">
-                                                <?php echo wp_trim_words($job_excerpt, 30); ?>
-                                            </p>
-                                        </div>
+                                        <ul style="height: fit-content; list-style-type:disc; padding-left:20px; margin:0; font-size:14px; color:#555; line-height:1.6;">
+                                            <?php if (!empty($excerpt_lines)): ?>
+                                                <?php foreach ($excerpt_lines as $line): ?>
+                                                    <li><?php echo esc_html($line); ?></li>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <li>No description available</li>
+                                            <?php endif; ?>
+                                        </ul>
                                     </div>
-                                    <?php
+                            <?php
                                 endwhile;
                                 wp_reset_postdata();
                             else:
@@ -169,8 +195,8 @@ elseif (get_the_ID() == 10): ?>
             </article>
         </main>
     </div>
-    <?php
-    // === THÊM PHẦN ABOUT (ID = 1076) ===
+<?php
+// === THÊM PHẦN ABOUT (ID = 1076) ===
 elseif (get_the_ID() == 1076): ?>
     <div id="primary" class="content-area">
         <main id="main" class="site-main">
@@ -219,17 +245,17 @@ elseif (get_the_ID() == 1076): ?>
             </article>
         </main>
     </div>
-    <?php
+<?php
 else:
     // Load nội dung trang bình thường như theme gốc
-    ?>
+?>
     <div id="primary" class="content-area">
         <main id="main" class="site-main">
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
             </article>
         </main>
     </div>
-    <?php
+<?php
 endif;
 ?>
 
