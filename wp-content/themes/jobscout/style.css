@@ -446,6 +446,10 @@ textarea {
   font-weight: 300;
 }
 
+.other-jobs-section h2 {
+  text-align: center;
+}
+
 h1,
 h2,
 h3,
@@ -1160,7 +1164,7 @@ section[class*="-section"] .widget_text .widget-title,
   font-size: 1.7223em;
   margin-top: 0;
   margin-bottom: 0;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.5;
 }
 
@@ -1856,7 +1860,7 @@ SIDEBARS
 .rightsidebar #primary {
   float: left;
   width: 75%;
-  padding-right: 40px;
+  /* padding-right: 40px; */
 }
 
 .leftsidebar #primary {
@@ -2294,6 +2298,43 @@ SITE BANNER SECTION
   position: relative;
 }
 
+/* Force banner image full width */
+#banner-section .wp-custom-header img {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Make banner container full width */
+#banner-section {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Ensure image covers full banner area */
+#banner-section .wp-custom-header {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block;
+}
+
+/* Optional: increase banner height like demo */
+#banner-section .item {
+  position: relative;
+}
+
+#banner-section .wp-custom-header {
+  height: 600px !important;
+  /* chỉnh thành 600-700 nếu muốn banner cao hơn */
+  overflow: hidden;
+}
+
+#banner-section .wp-custom-header img {
+  height: 100% !important;
+}
+
 .banner-caption {
   position: absolute;
   top: 50%;
@@ -2314,10 +2355,11 @@ SITE BANNER SECTION
 
 .banner-caption .title {
   margin: 0;
-  font-size: 2.5em;
+  font-size: 2em;
   color: #fff;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.4;
+  text-align: left !important;
 }
 
 .banner-caption .description {
@@ -2326,6 +2368,7 @@ SITE BANNER SECTION
   color: #fff;
   line-height: 1.5;
   font-weight: 400;
+  text-align: left !important;
 }
 
 .banner-caption .form-wrap {
@@ -2346,12 +2389,14 @@ SITE BANNER SECTION
 }
 
 .banner-caption .jobscout_job_filters .search_jobs {
-  padding: 0;
+  padding: 15px;
   display: flex;
   flex: 1;
   flex-wrap: wrap;
-  border-radius: 5px;
   overflow: hidden;
+  gap: 15px;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .banner-caption .jobscout_job_filters .search_jobs div.filter_first,
@@ -2364,6 +2409,10 @@ SITE BANNER SECTION
   display: flex;
   flex: 1;
   padding-left: 0;
+}
+
+.banner-caption .jobscout_job_filters .search_jobs div.search_keywords input[type="text"] {
+  width: 390px !important;
 }
 
 .banner-caption .jobscout_job_filters .search_jobs div.filter_wide,
@@ -2387,7 +2436,7 @@ SITE BANNER SECTION
 .banner-caption .jobscout_job_filters .search_jobs input,
 .banner-caption .jobscout_job_filters .search_jobs select {
   border-radius: 0;
-  height: 60px;
+  height: 50px;
   border-top: none;
   border-bottom: none;
   border-right: none;
@@ -2396,6 +2445,41 @@ SITE BANNER SECTION
   padding: 10px 20px;
   color: #666;
 }
+
+.banner-caption .jobscout_job_filters .search_jobs select {
+  appearance: none;
+  /* Ẩn mũi tên mặc định */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  border-radius: 0;
+  height: 50px;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  font-size: 0.8888em;
+  font-weight: 400;
+  padding: 10px 20px;
+  color: #666;
+
+  /* Hai icon: vị trí bên trái, mũi tên bên phải */
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512' fill='none' stroke='%23fe7e2e' stroke-width='40' stroke-linecap='round' stroke-linejoin='round'><path d='M192 48C106 48 40 114 40 200c0 112 152 264 152 264s152-152 152-264c0-86-66-152-152-152z'/><circle cx='192' cy='200' r='45' fill='%23fe7e2e'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");
+
+  background-repeat: no-repeat, no-repeat;
+  background-position: 14px center, right 14px center;
+  /* vị trí icon trái và mũi tên phải */
+  background-size: 20px, 17px;
+  /* icon trái lớn hơn mũi tên phải */
+
+  padding-left: 45px;
+  /* chừa khoảng cho icon vị trí bên trái */
+  padding-right: 45px;
+  /* chừa khoảng cho mũi tên bên phải */
+  cursor: pointer;
+}
+
 
 .banner-caption .jobscout_job_filters .search_jobs input::placeholder {
   color: #666 !important;
@@ -2412,23 +2496,31 @@ SITE BANNER SECTION
 
 .banner-caption .jobscout_job_filters .search_jobs>div:first-child input {
   border-left: none;
+  background-image: url('data:image/svg+xml; utf-8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23fe7e2e" d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z"></path></svg>');
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position: 14px center;
+  padding-left: 45px;
 }
 
 .banner-caption .jobscout_job_filters .search_jobs input[type="submit"] {
-  padding: 0;
-  width: 60px;
-  background-image: url('data:image/svg+xml; utf-8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23fff" d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z"></path></svg>');
+  padding: 10px 20px;
+  width: auto;
+  background-image: none;
+  background-color: #fe7e2e !important;
+  color: #fff !important;
+  text-indent: 0;
   background-repeat: no-repeat;
   background-size: 20px;
   background-position: center;
-  text-indent: 70px;
   overflow: hidden;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-weight: 700;
 }
 
 .banner-caption .jobscout_job_filters .search_jobs input[type="submit"]:hover {
-  background-color: #fff;
-  background-image: url('data:image/svg+xml; utf-8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%232ace5e" d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z"></path></svg>');
+  background-color: #ff690c !important;
 }
 
 /*=========================
@@ -2547,9 +2639,8 @@ section.top-job-section .section-title {
   width: 48%;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  margin-right: 2.5%;
-  margin-bottom: 3%;
-  border-radius: 5px;
+  margin-right: 3%;
+  margin-bottom: 3% !important;
   padding: 30px;
   position: relative;
   display: flex;
@@ -2739,6 +2830,194 @@ section.top-job-section .section-title {
 }
 
 /*============================
+TOP JOBS GRID LAYOUT (NEW)
+===========================*/
+.top-jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.top-job-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  padding: 25px;
+  transition: box-shadow 0.3s ease;
+  box-sizing: border-box;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.top-job-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.top-job-card-header {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.top-job-logo {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e0e0e0;
+}
+
+.top-job-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.logo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 36px;
+}
+
+.top-job-info {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.top-job-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+  color: #333;
+  text-transform: uppercase;
+  word-wrap: break-word;
+}
+
+.top-job-title a {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.top-job-title a:hover {
+  color: #2ace5e;
+}
+
+.top-job-date {
+  font-size: 13px;
+  color: #999;
+  margin: 0 0 8px 0;
+}
+
+.top-job-meta {
+  margin: 0 0 15px 0;
+  display: inline-flex;
+  align-items: center;
+  background: #f5f5f5;
+  overflow: hidden;
+  border-radius: 5px;
+  max-width: 100%;
+}
+
+.meta-badge {
+  display: inline-block;
+  padding: 8px 15px;
+  color: #666;
+  font-size: 13px;
+  white-space: nowrap;
+  border-right: 1px solid #d0d0d0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta-badge:last-child {
+  border-right: none;
+}
+
+.top-job-bullets {
+  margin: 0;
+  padding-left: 18px;
+  list-style: disc;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.top-job-bullets li {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 5px;
+  word-break: break-word;
+}
+
+/* View More Jobs Button */
+.view-more-jobs-wrapper {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.view-more-jobs-btn {
+  display: inline-block;
+  padding: 14px 40px;
+  background: transparent;
+  border: 2px solid #fe7e2e;
+  color: #fe7e2e;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.view-more-jobs-btn:hover {
+  background: #fe7e2e;
+  color: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .top-jobs-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .top-job-card-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .top-job-logo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .top-job-info {
+    width: 100%;
+  }
+
+  .top-job-meta {
+    justify-content: center;
+  }
+
+  .top-job-bullets {
+    text-align: left;
+    padding-left: 20px;
+  }
+}
+
+/*============================
 HOT JOB SECTION
 ===========================*/
 section.hot-job-section {
@@ -2887,39 +3166,157 @@ section[class*="-section"] .widget_raratheme_companion_cta_widget .right .button
 ARTICLE SECTION
 ===========================*/
 section.article-section {
-  margin: 70px 0;
   text-align: center;
+  background: #f5f5f5;
+  padding: 60px 0;
 }
 
 .article-section .article-wrap {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 30px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 40px;
   text-align: left;
   margin-top: 50px;
   margin-bottom: 40px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .article-section .article-wrap article {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
-  border-radius: 5px;
-  /*overflow: hidden;*/
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: row;
+}
+
+.article-section .article-wrap article:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.article-section .article-wrap article .post-thumbnail {
+  width: 280px;
+  min-width: 280px;
+  height: 100%;
+  display: block;
+  padding: 10px;
 }
 
 .article-section .article-wrap article img {
   width: 100%;
+  height: 100%;
+  min-height: 220px;
+  object-fit: cover;
+  display: block;
 }
 
-.article-section .article-wrap header.entry-header {
+.article-section .article-wrap .post-content-wrap {
   padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1;
+  justify-content: center;
 }
 
-.article-section .article-wrap header.entry-header .entry-title {
-  margin: 10px 0 0 0;
-  line-height: 1.5;
-  font-size: 1.112em;
+.article-section .article-wrap .entry-title {
+  margin: 0;
+  line-height: 1.4;
+  font-size: 1.25em;
   font-weight: 700;
 }
+
+.article-section .article-wrap .entry-title a {
+  color: #222;
+  text-decoration: none;
+}
+
+.article-section .article-wrap .entry-title a:hover {
+  color: #e8833a;
+}
+
+.article-section .article-wrap .entry-excerpt {
+  color: #666;
+  font-size: 0.95em;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.article-section .article-wrap .read-more-btn {
+  display: inline-block;
+  color: #e8833a;
+  font-weight: 600;
+  font-size: 0.9em;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.article-section .article-wrap .read-more-btn:hover {
+  color: #d47329;
+}
+
+/*=========================
+SUBCRIBE SECTION
+=========================*/
+.newsletter {
+  background-color: #fe7e2e !important;
+}
+
+.newsletter .container {
+  max-width: 900px;
+}
+
+.newsletter .container h3 {
+  text-align: left;
+}
+
+.newsletter input[type="email"],
+.newsletter button {
+  height: 48px;
+  /* bạn đổi tùy ý */
+  padding: 0 16px;
+  /* tạo khoảng bên trong */
+  box-sizing: border-box;
+  /* đảm bảo đúng chiều cao */
+}
+
+.newsletter button:hover {
+  color: #fe7e2e !important;
+  background-color: #fff !important;
+}
+
+/*=========================
+FOOTER COPYRIGHT SECTION
+=========================*/
+/* Ẩn toàn bộ phần text thừa */
+.footer-b .copyright {
+  text-align: center;
+  /* Căn giữa */
+}
+
+.footer-b .copyright a,
+.footer-b .copyright .author-link,
+.footer-b .copyright .wp-link {
+  display: none !important;
+}
+
+/* Ẩn đoạn "JobScout | Developed By ..." */
+.footer-b .copyright {
+  font-size: 0;
+  /* Ẩn toàn bộ text khác */
+}
+
+/* Hiện riêng phần muốn giữ lại */
+.footer-b .copyright .copyright-text {
+  font-size: 16px;
+  /* Cho chữ hiện lại */
+  color: #fff;
+}
+
 
 /*=========================
 TESTIMONIAL SECTION
@@ -4665,7 +5062,7 @@ WIDGET CALL TO ACTION
 }
 
 .widget_raratheme_companion_cta_widget .raratheme-cta-container {
-  max-width: 590px;
+  max-width: 820px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -4677,10 +5074,10 @@ WIDGET CALL TO ACTION
 .widget_raratheme_companion_cta_widget .widget-title {
   font-size: 1.7223em;
   color: #fff;
-  font-weight: 800;
+  font-weight: 700;
   margin-top: 0;
   margin-bottom: 0;
-  line-height: 1.5;
+  line-height: 2.5;
 }
 
 #secondary .widget_raratheme_companion_cta_widget .widget-title {
@@ -4698,21 +5095,29 @@ WIDGET CALL TO ACTION
   margin-bottom: 30px;
 }
 
+.widget_raratheme_companion_cta_widget .text-holder p br {
+  content: "";
+  display: block;
+  margin-bottom: 30px;
+  /* khoảng cách giữa các dòng */
+  line-height: 1.5;
+  /* tùy chỉnh khoảng cách dòng */
+}
+
+
 .widget_raratheme_companion_cta_widget a.btn-cta {
   display: inline-block;
-  background: #2ace5e;
-  border: 1px solid #2ace5e;
+  border: 1.5px solid #fff;
   color: #fff;
   font-weight: 700;
   margin: 5px;
   font-size: 0.888em;
-  border-radius: 5px;
   padding: 10px 18px;
 }
 
 .widget_raratheme_companion_cta_widget a.btn-cta:hover {
-  background: none;
-  color: #2ace5e;
+  background: #fff;
+  color: #000;
 }
 
 .widget_raratheme_companion_cta_widget .text a.btn-cta {
@@ -6441,11 +6846,13 @@ RESPONSIVE STYLESHEET
 	ARTICLE SECTION
 	==========================*/
   .article-section .article-wrap {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 30px;
   }
 
-  .article-section .article-wrap article:last-child {
-    display: none;
+  .article-section .article-wrap article .post-thumbnail {
+    width: 240px;
+    min-width: 240px;
   }
 
   /*===========================
@@ -6713,10 +7120,22 @@ RESPONSIVE STYLESHEET
   .article-section .article-wrap {
     grid-template-columns: repeat(1, 1fr);
     margin-top: 30px;
+    grid-gap: 25px;
   }
 
-  .article-section .article-wrap article:last-child {
-    display: block;
+  .article-section .article-wrap article {
+    flex-direction: column;
+  }
+
+  .article-section .article-wrap article .post-thumbnail {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+  }
+
+  .article-section .article-wrap article img {
+    height: 200px;
+    min-height: 200px;
   }
 
   /*===========================
@@ -8302,7 +8721,9 @@ body {
 .job-content-main {}
 
 /* Left column */
-.job-sidebar {}
+.job-sidebar {
+  
+}
 
 /* Right column */
 
@@ -8326,6 +8747,32 @@ body {
   line-height: 1.7;
   font-size: 15px;
 }
+
+/* ngôi sao */
+.rating-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* Sao đầy */
+.rating-stars .star{
+  color: #ff7a00 !important;
+  font-size: 22px;
+}
+
+/* Sao rỗng */
+.rating-stars .far {
+  color: #ccc !important;
+}
+
+.rating-number {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ff7a00;
+}
+
 
 /* ----- Sidebar Widgets ----- */
 .sidebar-widget {
@@ -8700,7 +9147,6 @@ body {
   color: #333;
   line-height: 1.6;
   margin: 0 auto;
-  padding: 0 20px;
 }
 
 /* ========================================= */
@@ -8973,9 +9419,7 @@ body {
 /* RESPONSIVE DESIGN */
 /* ========================================= */
 @media (max-width: 768px) {
-  .company-about-page {
-    padding: 0 15px;
-  }
+
 
   .hero {
     height: 350px;
@@ -9041,6 +9485,67 @@ body {
   border: 1px dashed #ddd;
 }
 
+/* ============================================================= */
+/*  ẨN SIDEBAR HOÀN TOÀN CHỈ TRÊN TRANG ABOUT US (ID 1076)     */
+/* ============================================================= */
+.page-id-1076 #secondary,
+.page-id-1076 .widget-area {
+  display: none !important;
+}
+
+.content-area .page-id-1076 .rightsidebar {
+  padding-right: 0px !important;
+}
+
+.page-id-1076 #primary {
+  width: 100% !important;
+  max-width: 100% !important;
+  float: none !important;
+  margin: 0 auto !important;
+}
+
+.page-id-1076 .site-main {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Nếu theme của bạn dùng class .has-sidebar thì thêm dòng này nữa */
+.page-id-1076.has-sidebar #primary {
+  width: 100% !important;
+}
+
+/* Đảm bảo content full width đẹp */
+.page-id-1076 .about-us-page .container,
+.page-id-1076 .about-vision .container,
+.page-id-1076 .company-info .container {
+  max-width: 1280px;
+  padding: 0 40px;
+}
+
+@media (max-width: 768px) {
+
+  .page-id-1076 .about-vision .container,
+  .page-id-1076 .company-info .container {
+    padding: 0 20px;
+  }
+}
+
+
+.about-business-widget h3 {
+  color: #d4a017 !important;
+  /* font-style: italic !important; */
+}
+
+.about-business-widget p {
+  color: #333 !important;
+}
+
+.about-header-widget p {
+  line-height: 1.5 !important;
+  margin: 0 !important;
+  color: white !important;
+}
+
 /* Custom */
 button,
 input[type="email"] {
@@ -9087,8 +9592,39 @@ input[type="email"] {
 
 .site-content {
   margin: 0 !important;
+  background: #f2f2f2;
 }
 
 .hentry {
   margin-bottom: 0 !important;
+}
+
+/*Detail
+/* Ẩn sidebar trên single post/blog chi tiết */
+.single .widget-area,
+.single #secondary {
+  display: none !important;
+}
+
+/* Nếu cần responsive, giữ sidebar trên mobile nếu muốn */
+@media (min-width: 768px) {
+  .single #secondary {
+    display: none !important;
+  }
+}
+
+.breadcrumb-wrap .container {
+  margin: 0 245px !important;
+}
+
+.breadcrumb-wrap .container #crumbs span {
+  color: #d4a017 !important;
+}
+
+
+
+.btn-share:hover {
+  background: #d4a017;
+  color: #fff;
+  transition: 0.3s;
 }
