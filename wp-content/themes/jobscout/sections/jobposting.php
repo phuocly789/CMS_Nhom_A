@@ -101,9 +101,9 @@ if ( $ed_jobposting && jobscout_is_wp_job_manager_activated() && $job_title  ) {
                         // Check if there are more jobs to show
                         if ($jobs_query->found_posts > 6) : ?>
                             <div class="view-more-jobs-wrapper">
-                                <a href="<?php echo esc_url(get_post_type_archive_link('job_listing')); ?>" class="view-more-jobs-btn">
+                                <button id="view-all-jobs-btn" class="view-more-jobs-btn" data-total="<?php echo $jobs_query->found_posts; ?>">
                                     VIEW MORE JOBS
-                                </a>
+                                </button>
                             </div>
                         <?php endif; ?>
                     <?php

@@ -130,7 +130,10 @@ elseif (get_the_ID() == 10): ?>
                                                     style="font-size:40px; color:#ccc;"></i><?php endif; ?>
                                         </div>
                                         <div class="job-content" style="flex:1;">
-                                            <h3 style="font-size:22px; color:#333; margin:0 0 10px 0;"><?php echo $job_title; ?>
+                                            <h3 style="font-size:22px; color: black; margin:0 0 10px 0;">
+                                                <a href="<?php the_permalink(); ?>" class="job-title-link" style="color: black !important;">
+                                                    <?php echo esc_html($job_title); ?>
+                                                </a>
                                             </h3>
                                             <p style="font-size:16px; color:#666; margin:0 0 10px 0;"><?php echo $job_category; ?> /
                                                 <?php echo $job_location; ?>

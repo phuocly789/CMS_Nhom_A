@@ -446,6 +446,10 @@ textarea {
   font-weight: 300;
 }
 
+.other-jobs-section h2 {
+  text-align: center;
+}
+
 h1,
 h2,
 h3,
@@ -2296,38 +2300,39 @@ SITE BANNER SECTION
 
 /* Force banner image full width */
 #banner-section .wp-custom-header img {
-    width: 100% !important;
-    height: auto !important;
-    max-width: 100% !important;
-    object-fit: cover;
-    object-position: center;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* Make banner container full width */
 #banner-section {
-    padding: 0 !important;
-    margin: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 /* Ensure image covers full banner area */
 #banner-section .wp-custom-header {
-    width: 100% !important;
-    max-width: 100% !important;
-    display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block;
 }
 
 /* Optional: increase banner height like demo */
 #banner-section .item {
-    position: relative;
+  position: relative;
 }
 
 #banner-section .wp-custom-header {
-    height: 600px !important; /* chỉnh thành 600-700 nếu muốn banner cao hơn */
-    overflow: hidden;
+  height: 600px !important;
+  /* chỉnh thành 600-700 nếu muốn banner cao hơn */
+  overflow: hidden;
 }
 
 #banner-section .wp-custom-header img {
-    height: 100% !important;
+  height: 100% !important;
 }
 
 .banner-caption {
@@ -2406,7 +2411,7 @@ SITE BANNER SECTION
   padding-left: 0;
 }
 
-.banner-caption .jobscout_job_filters .search_jobs div.search_keywords input[type="text"]{
+.banner-caption .jobscout_job_filters .search_jobs div.search_keywords input[type="text"] {
   width: 390px !important;
 }
 
@@ -2442,7 +2447,8 @@ SITE BANNER SECTION
 }
 
 .banner-caption .jobscout_job_filters .search_jobs select {
-  appearance: none;           /* Ẩn mũi tên mặc định */
+  appearance: none;
+  /* Ẩn mũi tên mặc định */
   -webkit-appearance: none;
   -moz-appearance: none;
 
@@ -2460,13 +2466,17 @@ SITE BANNER SECTION
   background-image:
     url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512' fill='none' stroke='%23fe7e2e' stroke-width='40' stroke-linecap='round' stroke-linejoin='round'><path d='M192 48C106 48 40 114 40 200c0 112 152 264 152 264s152-152 152-264c0-86-66-152-152-152z'/><circle cx='192' cy='200' r='45' fill='%23fe7e2e'/></svg>"),
     url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");
-  
+
   background-repeat: no-repeat, no-repeat;
-  background-position: 14px center, right 14px center;  /* vị trí icon trái và mũi tên phải */
-  background-size: 20px, 17px;  /* icon trái lớn hơn mũi tên phải */
-  
-  padding-left: 45px;   /* chừa khoảng cho icon vị trí bên trái */
-  padding-right: 45px;  /* chừa khoảng cho mũi tên bên phải */
+  background-position: 14px center, right 14px center;
+  /* vị trí icon trái và mũi tên phải */
+  background-size: 20px, 17px;
+  /* icon trái lớn hơn mũi tên phải */
+
+  padding-left: 45px;
+  /* chừa khoảng cho icon vị trí bên trái */
+  padding-right: 45px;
+  /* chừa khoảng cho mũi tên bên phải */
   cursor: pointer;
 }
 
@@ -2981,26 +2991,26 @@ TOP JOBS GRID LAYOUT (NEW)
     grid-template-columns: 1fr;
     gap: 20px;
   }
-  
+
   .top-job-card-header {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
-  
+
   .top-job-logo {
     width: 80px;
     height: 80px;
   }
-  
+
   .top-job-info {
     width: 100%;
   }
-  
+
   .top-job-meta {
     justify-content: center;
   }
-  
+
   .top-job-bullets {
     text-align: left;
     padding-left: 20px;
@@ -3156,39 +3166,157 @@ section[class*="-section"] .widget_raratheme_companion_cta_widget .right .button
 ARTICLE SECTION
 ===========================*/
 section.article-section {
-  margin: 70px 0;
   text-align: center;
+  background: #f5f5f5;
+  padding: 60px 0;
 }
 
 .article-section .article-wrap {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 30px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 40px;
   text-align: left;
   margin-top: 50px;
   margin-bottom: 40px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .article-section .article-wrap article {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
-  border-radius: 5px;
-  /*overflow: hidden;*/
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: row;
+}
+
+.article-section .article-wrap article:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.article-section .article-wrap article .post-thumbnail {
+  width: 280px;
+  min-width: 280px;
+  height: 100%;
+  display: block;
+  padding: 10px;
 }
 
 .article-section .article-wrap article img {
   width: 100%;
+  height: 100%;
+  min-height: 220px;
+  object-fit: cover;
+  display: block;
 }
 
-.article-section .article-wrap header.entry-header {
+.article-section .article-wrap .post-content-wrap {
   padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1;
+  justify-content: center;
 }
 
-.article-section .article-wrap header.entry-header .entry-title {
-  margin: 10px 0 0 0;
-  line-height: 1.5;
-  font-size: 1.112em;
+.article-section .article-wrap .entry-title {
+  margin: 0;
+  line-height: 1.4;
+  font-size: 1.25em;
   font-weight: 700;
 }
+
+.article-section .article-wrap .entry-title a {
+  color: #222;
+  text-decoration: none;
+}
+
+.article-section .article-wrap .entry-title a:hover {
+  color: #e8833a;
+}
+
+.article-section .article-wrap .entry-excerpt {
+  color: #666;
+  font-size: 0.95em;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.article-section .article-wrap .read-more-btn {
+  display: inline-block;
+  color: #e8833a;
+  font-weight: 600;
+  font-size: 0.9em;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.article-section .article-wrap .read-more-btn:hover {
+  color: #d47329;
+}
+
+/*=========================
+SUBCRIBE SECTION
+=========================*/
+.newsletter {
+  background-color: #fe7e2e !important;
+}
+
+.newsletter .container {
+  max-width: 900px;
+}
+
+.newsletter .container h3 {
+  text-align: left;
+}
+
+.newsletter input[type="email"],
+.newsletter button {
+  height: 48px;
+  /* bạn đổi tùy ý */
+  padding: 0 16px;
+  /* tạo khoảng bên trong */
+  box-sizing: border-box;
+  /* đảm bảo đúng chiều cao */
+}
+
+.newsletter button:hover {
+  color: #fe7e2e !important;
+  background-color: #fff !important;
+}
+
+/*=========================
+FOOTER COPYRIGHT SECTION
+=========================*/
+/* Ẩn toàn bộ phần text thừa */
+.footer-b .copyright {
+  text-align: center;
+  /* Căn giữa */
+}
+
+.footer-b .copyright a,
+.footer-b .copyright .author-link,
+.footer-b .copyright .wp-link {
+  display: none !important;
+}
+
+/* Ẩn đoạn "JobScout | Developed By ..." */
+.footer-b .copyright {
+  font-size: 0;
+  /* Ẩn toàn bộ text khác */
+}
+
+/* Hiện riêng phần muốn giữ lại */
+.footer-b .copyright .copyright-text {
+  font-size: 16px;
+  /* Cho chữ hiện lại */
+  color: #fff;
+}
+
 
 /*=========================
 TESTIMONIAL SECTION
@@ -4934,7 +5062,7 @@ WIDGET CALL TO ACTION
 }
 
 .widget_raratheme_companion_cta_widget .raratheme-cta-container {
-  max-width: 590px;
+  max-width: 820px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -4946,10 +5074,10 @@ WIDGET CALL TO ACTION
 .widget_raratheme_companion_cta_widget .widget-title {
   font-size: 1.7223em;
   color: #fff;
-  font-weight: 800;
+  font-weight: 700;
   margin-top: 0;
   margin-bottom: 0;
-  line-height: 1.5;
+  line-height: 2.5;
 }
 
 #secondary .widget_raratheme_companion_cta_widget .widget-title {
@@ -4967,21 +5095,29 @@ WIDGET CALL TO ACTION
   margin-bottom: 30px;
 }
 
+.widget_raratheme_companion_cta_widget .text-holder p br {
+  content: "";
+  display: block;
+  margin-bottom: 30px;
+  /* khoảng cách giữa các dòng */
+  line-height: 1.5;
+  /* tùy chỉnh khoảng cách dòng */
+}
+
+
 .widget_raratheme_companion_cta_widget a.btn-cta {
   display: inline-block;
-  background: #2ace5e;
-  border: 1px solid #2ace5e;
+  border: 1.5px solid #fff;
   color: #fff;
   font-weight: 700;
   margin: 5px;
   font-size: 0.888em;
-  border-radius: 5px;
   padding: 10px 18px;
 }
 
 .widget_raratheme_companion_cta_widget a.btn-cta:hover {
-  background: none;
-  color: #2ace5e;
+  background: #fff;
+  color: #000;
 }
 
 .widget_raratheme_companion_cta_widget .text a.btn-cta {
@@ -6710,11 +6846,13 @@ RESPONSIVE STYLESHEET
 	ARTICLE SECTION
 	==========================*/
   .article-section .article-wrap {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 30px;
   }
 
-  .article-section .article-wrap article:last-child {
-    display: none;
+  .article-section .article-wrap article .post-thumbnail {
+    width: 240px;
+    min-width: 240px;
   }
 
   /*===========================
@@ -6982,10 +7120,22 @@ RESPONSIVE STYLESHEET
   .article-section .article-wrap {
     grid-template-columns: repeat(1, 1fr);
     margin-top: 30px;
+    grid-gap: 25px;
   }
 
-  .article-section .article-wrap article:last-child {
-    display: block;
+  .article-section .article-wrap article {
+    flex-direction: column;
+  }
+
+  .article-section .article-wrap article .post-thumbnail {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+  }
+
+  .article-section .article-wrap article img {
+    height: 200px;
+    min-height: 200px;
   }
 
   /*===========================
@@ -8571,7 +8721,9 @@ body {
 .job-content-main {}
 
 /* Left column */
-.job-sidebar {}
+.job-sidebar {
+  
+}
 
 /* Right column */
 
@@ -8595,6 +8747,32 @@ body {
   line-height: 1.7;
   font-size: 15px;
 }
+
+/* ngôi sao */
+.rating-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* Sao đầy */
+.rating-stars .star{
+  color: #ff7a00 !important;
+  font-size: 22px;
+}
+
+/* Sao rỗng */
+.rating-stars .far {
+  color: #ccc !important;
+}
+
+.rating-number {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ff7a00;
+}
+
 
 /* ----- Sidebar Widgets ----- */
 .sidebar-widget {
@@ -9361,10 +9539,11 @@ body {
 .about-business-widget p {
   color: #333 !important;
 }
+
 .about-header-widget p {
-    line-height: 1.5 !important;
-    margin: 0 !important;
-    color: white !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+  color: white !important;
 }
 
 /* Custom */
@@ -9413,8 +9592,47 @@ input[type="email"] {
 
 .site-content {
   margin: 0 !important;
+  background: #f2f2f2;
 }
 
 .hentry {
   margin-bottom: 0 !important;
+}
+
+/*Detail*/
+.site-content {
+  margin: 0 !important;
+  background: #f2f2f2;
+}
+
+.hentry {
+  margin-bottom: 0 !important;
+}
+/* Ẩn sidebar trên single post/blog chi tiết */
+.single .widget-area,
+.single #secondary {
+  display: none !important;
+}
+
+/* Nếu cần responsive, giữ sidebar trên mobile nếu muốn */
+@media (min-width: 768px) {
+  .single #secondary {
+    display: none !important;
+  }
+}
+
+.breadcrumb-wrap .container {
+  margin: 0 245px !important;
+}
+
+.breadcrumb-wrap .container #crumbs span {
+  color: #d4a017 !important;
+}
+
+
+
+.btn-share:hover {
+  background: #d4a017;
+  color: #fff;
+  transition: 0.3s;
 }
