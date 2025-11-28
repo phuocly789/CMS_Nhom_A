@@ -9599,7 +9599,15 @@ input[type="email"] {
   margin-bottom: 0 !important;
 }
 
-/*Detail
+/*Detail*/
+.site-content {
+  margin: 0 !important;
+  background: #f2f2f2;
+}
+
+.hentry {
+  margin-bottom: 0 !important;
+}
 /* Ẩn sidebar trên single post/blog chi tiết */
 .single .widget-area,
 .single #secondary {
