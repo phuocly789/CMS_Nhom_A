@@ -119,3 +119,20 @@
         </div>
     </aside>
 </div>
+
+<script>
+    function sharePost() {
+        // Function share đơn giản (copy link hoặc social share)
+        if (navigator.share) {
+            navigator.share({
+                title: '<?php echo get_the_title(); ?>',
+                url: window.location.href
+            });
+        } else {
+            // Fallback copy link
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('Link copied!');
+            });
+        }
+    }
+</script>
