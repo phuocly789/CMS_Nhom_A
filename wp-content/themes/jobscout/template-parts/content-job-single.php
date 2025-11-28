@@ -2,11 +2,9 @@
 
 /**
  * The template for displaying single job listings.
- *
- * Please note, this is a simplified template. You might need to adjust
- * the get_post_meta keys ('company_logo', 'job_type', etc.) to match
- * the actual keys used by your theme or plugin (like ACF, MetaBox).
+ * UPDATED VERSION - Please replace the old file content with this.
  */
+$company_logo_url = get_the_company_logo();
 ?>
 
 <div class="job-single-container">
@@ -14,7 +12,7 @@
         <!-- Breadcrumb -->
         <nav class="job-breadcrumb">
                 <a href="<?php echo home_url(); ?>">Home</a> /
-                <a href="<?php echo get_post_type_archive_link('job_listing'); ?>">All Jobs</a> /
+                <a href="<?php echo get_permalink(10); ?>">All Jobs</a> /
                 <span class="current"><?php the_title(); ?></span>
         </nav>
 
@@ -22,27 +20,22 @@
 
                 <!-- Job Header -->
                 <header class="job-header">
-                        <div class="logo-wrapper">
-                                <?php
-                                // Giả sử 'company_logo' là URL của logo lưu trong custom field.
-                                $company_logo_url = get_post_meta(get_the_ID(), 'company_logo', true);
-                                if ($company_logo_url) {
-                                        echo '<img src="' . esc_url($company_logo_url) . '" alt="' . get_the_title() . ' Logo">';
-                                } else {
-                                        // Fallback nếu không có logo
-                                        echo '<img src="https://i.ibb.co/6yB6B46/sodoh-logo.png" alt="The Sodoh Logo">';
-                                }
-                                ?>
-                        </div>
+                        <figure class="company-logo">
+                                <?php the_company_logo('thumbnail'); ?>
+                        </figure>
 
                         <div class="job-title-section">
                                 <h1 class="job-title"><?php the_title(); ?></h1>
+
+                                <!-- Date is now separate for correct styling -->
+                                <span class="created-date">Created: <?php echo get_the_date('M d, Y'); ?></span>
+
+                                <!-- Meta tags are in their own container -->
                                 <div class="job-meta-main">
-                                        <span class="created-date">Created: <?php echo get_the_date('M d, Y'); ?></span>
                                         <span class="job-type"><?php echo esc_html(get_post_meta(get_the_ID(), 'job_type', true) ?: 'Fulltime'); ?></span>
                                         <span class="job-category">
                                                 <?php
-                                                $categories = get_the_terms(get_the_ID(), 'job_listing_category'); // Thay 'job_listing_category' bằng taxonomy của bạn
+                                                $categories = get_the_terms(get_the_ID(), 'job_listing_category');
                                                 if ($categories && !is_wp_error($categories)) {
                                                         echo esc_html($categories[0]->name);
                                                 } else {
@@ -56,11 +49,13 @@
 
                         <div class="job-actions">
                                 <button class="share-btn">SHARE</button>
-                                <a href="#apply" class="apply-btn">APPLY JOB</a>
+
+                                <?php get_job_manager_template_part('job-application'); ?>
+
                         </div>
                 </header>
 
-                <!-- Main Content Wrapper -->
+                <!-- Main Content Wrapper (Grid Layout) -->
                 <div class="job-content-wrapper">
 
                         <!-- Left column -->
@@ -68,8 +63,8 @@
                                 <section class="content-section">
                                         <h2>Overview about Company</h2>
                                         <div class="section-content">
-                                                <?php the_content(); // Nội dung chính của bài đăng 
-                                                ?>
+                                                <?php echo remove_video_from_content(get_the_content()); ?>
+
                                         </div>
                                 </section>
 
@@ -82,119 +77,76 @@
                                                 ?>
                                         </div>
                                 </section>
-
-                                <section class="content-section">
-                                        <h2>Location</h2>
-                                        <div class="section-content">
-                                                <?php
-                                                $location_details = get_post_meta(get_the_ID(), 'location_details', true);
-                                                echo $location_details ? wpautop(esc_html($location_details)) : '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fauibus lectus tristique massa gravida vel elementum, mi. Sit scelerisque at amet leo. In volutpat turpis dolor, at. Vivamus volutpat in nunc, porttitor dui.</p>';
-                                                ?>
-                                        </div>
-                                </section>
                         </main>
 
                         <!-- Right sidebar -->
                         <aside class="job-sidebar">
-                                <div class="sidebar-card">
+                                <div class="sidebar-widget">
                                         <h3>Staff Rating</h3>
-                                        <div class="rating-section">
-                                                <div class="rating-stars" title="4.0 out of 5 stars">
-                                                        <span class="star filled">★</span>
-                                                        <span class="star filled">★</span>
-                                                        <span class="star filled">★</span>
-                                                        <span class="star filled">★</span>
-                                                        <span class="star">★</span>
+                                        <div class="rating-wrapper">
+
+                                                <div class="rating-stars">
+                                                        <i class="star fas fa-star"></i>
+                                                        <i class="star fas fa-star"></i>
+                                                        <i class="star fas fa-star"></i>
+                                                        <i class="star fas fa-star"></i>
+                                                        <i class="star far fa-star"></i>
                                                 </div>
-                                                <div class="rating-score">4.0</div>
+
+                                                <span class="rating-number">4.0</span>
+
                                         </div>
                                 </div>
 
-                                <div class="sidebar-card">
+                                <div class="sidebar-widget">
                                         <h3>Company Photos</h3>
                                         <div class="company-photos">
-                                                <div class="photo-item" style="background-image: url('https://i.ibb.co/L5TzPjQ/sodoh-photo.jpg');">
+                                                <div class="photo-item" style="background-image: url('http://goldviet24k.vn/pic/News/images/tin-khac/loi-chuc-thanh-cong-trong-cong-viec(3).jpg');">
                                                         <div class="photo-overlay">+5</div>
                                                 </div>
                                         </div>
                                 </div>
                         </aside>
+
                 </div>
         </div>
 
         <!-- Other Jobs Section -->
         <aside class="other-jobs-section">
                 <h2>OTHER JOBS</h2>
+
                 <div class="other-jobs-grid">
                         <?php
+                        global $post;
+                        $original_post = $post; // LƯU LẠI POST GỐC
+
                         $related_jobs_query = new WP_Query([
                                 'post_type'      => 'job_listing',
-                                'posts_per_page' => 4,
+                                'posts_per_page' => 6,
                                 'post__not_in'   => [get_the_ID()],
                                 'orderby'        => 'date',
                                 'order'          => 'DESC',
                         ]);
 
                         if ($related_jobs_query->have_posts()) :
-                                // Dòng lặp ĐÚNG phải có a`$related_jobs_query->the_post();`
-                                while ($related_jobs_query->have_posts()) : $related_jobs_query->the_post();
 
-                                        // --- Lấy dữ liệu ---
-                                        $logo_url     = get_post_meta(get_the_ID(), 'company_logo', true);
-                                        $location     = get_post_meta(get_the_ID(), 'job_location', true) ?: 'Chưa cập nhật';
-                                        $categories   = get_the_terms(get_the_ID(), 'job_listing_category');
+                                while ($related_jobs_query->have_posts()) :
+                                        $related_jobs_query->the_post();
 
-                                        // Bạn cần thay key đúng cho 2 trường này
-                                        $company_name = get_post_meta(get_the_ID(), 'company_name', true) ?: 'Tên công ty';
-                                        $salary       = get_post_meta(get_the_ID(), 'job_salary', true) ?: 'Thương lượng';
-                        ?>
+                                        // GÁN LẠI GLOBAL POST CHO TEMPLATE
+                                        $post = $related_jobs_query->post;
 
-                                        <!-- Bắt đầu cấu trúc HTML mới cho mỗi card -->
-                                        <div class="other-job-card">
-                                                <div class="job-card-logo">
-                                                        <?php if ($logo_url) : ?>
-                                                                <img src="<?php echo esc_url($logo_url); ?>" alt="<?php echo esc_attr($company_name); ?> Logo">
-                                                        <?php else: ?>
-                                                                <div class="logo-placeholder"></div>
-                                                        <?php endif; ?>
-                                                </div>
-                                                <div class="job-card-details">
-                                                        <h3 class="job-card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                                                        <p class="job-card-company">@ <?php echo esc_html($company_name); ?></p>
+                                        // GỌI TEMPLATE CHUẨN
+                                        include locate_template('template-parts/content-job_listing-custom.php');
 
-                                                        <hr class="job-card-separator">
 
-                                                        <div class="job-card-meta">
-                                                                <span class="meta-item salary">
-                                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: rgb(108, 117, 125);">
-                                                                                <path d="M3 6h18M3 10h18M3 14h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                        </svg>
-                                                                        <?php echo esc_html($salary); ?>
-                                                                </span>
-                                                                <span class="meta-item location">
-                                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: rgb(108, 117, 125);">
-                                                                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                                <path d="M12 10a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                        </svg>
-                                                                        <?php echo esc_html($location); ?>
-                                                                </span>
-                                                        </div>
-
-                                                        <div class="job-card-category">
-                                                                <?php if ($categories && !is_wp_error($categories)) : ?>
-                                                                        <span class="category-tag"><?php echo esc_html($categories[0]->name); ?></span>
-                                                                <?php else : ?>
-                                                                        <span class="category-tag">General</span>
-                                                                <?php endif; ?>
-                                                        </div>
-                                                </div>
-                                        </div>
-                                        <!-- Kết thúc cấu trúc HTML mới -->
-
-                        <?php
                                 endwhile;
-                                wp_reset_postdata();
+
                         endif;
+
+                        // KHÔI PHỤC GLOBAL POST GỐC
+                        $post = $original_post;
+                        wp_reset_postdata();
                         ?>
                 </div>
         </aside>

@@ -11,7 +11,7 @@ get_header(); ?>
 
 <?php
 // === CHỈ HIỂN THỊ NỘI DUNG CUSTOM NÀY KHI TRANG HIỆN TẠI LÀ ID = 6 ===
-if (get_the_ID() == 6) : ?>
+if (get_the_ID() == 6): ?>
 
     <div id="primary" class="content-area">
         <main id="main" class="site-main">
@@ -28,7 +28,8 @@ if (get_the_ID() == 6) : ?>
                 </section>
 
                 <!-- For Employers and Jobseekers -->
-                <section class="contact-sections" style="display: flex; justify-content: space-around; padding: 40px 0; background-color: #f0f0f0;">
+                <section class="contact-sections"
+                    style="display: flex; justify-content: space-around; padding: 40px 0; background-color: #f0f0f0;">
                     <div class="for-employers" style="width: 45%; text-align: center;">
                         <?php dynamic_sidebar('contact-one'); ?>
                     </div>
@@ -41,10 +42,10 @@ if (get_the_ID() == 6) : ?>
         </main>
     </div>
 
-<?php
-// === NẾU KHÔNG PHẢI TRANG ID = 6 → DÙNG GIAO DIỆN MẶC ĐỊNH CỦA THEME ===
+    <?php
+    // === NẾU KHÔNG PHẢI TRANG ID = 6 → DÙNG GIAO DIỆN MẶC ĐỊNH CỦA THEME ===
 
-elseif (get_the_ID() == 10) : ?>
+elseif (get_the_ID() == 10): ?>
     <div id="primary" class="content-area">
         <main id="main" class="site-main">
             <article id="post-<?php the_ID(); ?>" <?php post_class('jobs-all'); ?>>
@@ -57,30 +58,34 @@ elseif (get_the_ID() == 10) : ?>
                     <div class="container" style="max-width:1200px; margin:0 auto;">
 
                         <!-- Tiêu đề + Dropdown Filter -->
-                        <div class="jobs-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+                        <div class="jobs-header"
+                            style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
                             <h2 style="font-size:32px; color:#333; margin:0;">ALL JOBS</h2>
                             <div class="custom-select-wrapper" style="position:relative; width:auto;">
-                                <select id="jobs-filter" style="padding:10px 40px 10px 20px; border:1px solid #ddd; background:#fff; font-size:16px; cursor:pointer; width:auto !important; appearance:none; -webkit-appearance:none; -moz-appearance:none;">
+                                <select id="jobs-filter"
+                                    style="padding:10px 40px 10px 20px; border:1px solid #ddd; background:#fff; font-size:16px; cursor:pointer; width:auto !important; appearance:none; -webkit-appearance:none; -moz-appearance:none;">
                                     <option value="latest">Latest Jobs</option>
                                     <option value="popular">Popular Jobs</option>
                                     <option value="featured">Featured Jobs</option>
                                 </select>
                                 <!-- Icon arrow down (sử dụng Font Awesome nếu có, hoặc CSS pure) -->
-                                <i class="fa fa-chevron-down" style="position:absolute; right:15px; top:50%; transform:translateY(-50%); color:#666; pointer-events:none; font-size:14px;"></i>
+                                <i class="fa fa-chevron-down"
+                                    style="position:absolute; right:15px; top:50%; transform:translateY(-50%); color:#666; pointer-events:none; font-size:14px;"></i>
                             </div>
                         </div>
 
                         <!-- Grid danh sách jobs (sẽ reload bằng AJAX) -->
-                        <div id="jobs-grid" class="jobs-grid" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:30px;">
+                        <div id="jobs-grid" class="jobs-grid"
+                            style="display:grid; grid-template-columns:repeat(2, 1fr); gap:30px;">
                             <!-- Jobs ban đầu sẽ load ở đây (PHP query đầu tiên) -->
                             <?php
                             $paged = 1;
                             $filter = 'latest';  // Default filter
                             $args = array(
-                                'post_type'      => 'job_listing',
+                                'post_type' => 'job_listing',
                                 'posts_per_page' => 8,
-                                'post_status'    => 'publish',
-                                'paged'          => $paged,
+                                'post_status' => 'publish',
+                                'paged' => $paged,
                             );
 
                             // Áp dụng filter default
@@ -94,8 +99,8 @@ elseif (get_the_ID() == 10) : ?>
                             } elseif ($filter == 'featured') {
                                 $args['meta_query'] = array(
                                     array(
-                                        'key'     => '_featured',
-                                        'value'   => 1,
+                                        'key' => '_featured',
+                                        'value' => 1,
                                         'compare' => '=',
                                     ),
                                 );
@@ -105,19 +110,24 @@ elseif (get_the_ID() == 10) : ?>
 
                             $jobs_query = new WP_Query($args);
 
-                            if ($jobs_query->have_posts()) :
-                                while ($jobs_query->have_posts()) : $jobs_query->the_post();
+                            if ($jobs_query->have_posts()):
+                                while ($jobs_query->have_posts()):
+                                    $jobs_query->the_post();
                                     // Code job-card giống trước (lặp lại để đầy đủ)
                                     $company_logo = function_exists('get_the_company_logo') ? get_the_company_logo() : (has_post_thumbnail() ? get_the_post_thumbnail_url() : '');
-                                    $job_title    = get_the_title();
+                                    $job_title = get_the_title();
                                     $job_location = get_post_meta(get_the_ID(), '_job_location', true) ?: 'No location';
                                     $job_terms = wp_get_post_terms(get_the_ID(), 'job_listing_category', array('fields' => 'names'));
                                     $job_category = (is_array($job_terms)) ? (!empty($job_terms) ? implode(', ', $job_terms) : 'Uncategorized') : 'Uncategorized';
-                                    $job_excerpt  = get_the_excerpt() ?: 'No description';
-                            ?>
-                                    <div class="job-card" style="background:#fff; padding:25px; border:1px solid #eee; box-shadow:0 2px 10px rgba(0,0,0,0.05); display:flex; gap:20px; align-items:start;">
-                                        <div class="job-logo" style="width:80px; height:80px; background:#f0f0f0; display:flex; align-items:center; justify-content:center;">
-                                            <?php if ($company_logo) : ?><img src="<?php echo $company_logo; ?>" alt="Logo" style="max-width:100%; max-height:100%;"><?php else : ?><i class="fa fa-briefcase" style="font-size:40px; color:#ccc;"></i><?php endif; ?>
+                                    $job_excerpt = get_the_excerpt() ?: 'No description';
+                                    ?>
+                                    <div class="job-card"
+                                        style="background:#fff; padding:25px; border:1px solid #eee; box-shadow:0 2px 10px rgba(0,0,0,0.05); display:flex; gap:20px; align-items:start;">
+                                        <div class="job-logo"
+                                            style="width:80px; height:80px; background:#f0f0f0; display:flex; align-items:center; justify-content:center;">
+                                            <?php if ($company_logo): ?><img src="<?php echo $company_logo; ?>" alt="Logo"
+                                                    style="max-width:100%; max-height:100%;"><?php else: ?><i class="fa fa-briefcase"
+                                                    style="font-size:40px; color:#ccc;"></i><?php endif; ?>
                                         </div>
                                         <div class="job-content" style="flex:1;">
                                             <h3 style="font-size:22px; color: black; margin:0 0 10px 0;">
@@ -125,14 +135,18 @@ elseif (get_the_ID() == 10) : ?>
                                                     <?php echo esc_html($job_title); ?>
                                                 </a>
                                             </h3>
-                                            <p style="font-size:16px; color:#666; margin:0 0 10px 0;"><?php echo $job_category; ?> / <?php echo $job_location; ?></p>
-                                            <p style="font-size:15px; color:#555; line-height:1.6; margin:0;"><?php echo wp_trim_words($job_excerpt, 30); ?></p>
+                                            <p style="font-size:16px; color:#666; margin:0 0 10px 0;"><?php echo $job_category; ?> /
+                                                <?php echo $job_location; ?>
+                                            </p>
+                                            <p style="font-size:15px; color:#555; line-height:1.6; margin:0;">
+                                                <?php echo wp_trim_words($job_excerpt, 30); ?>
+                                            </p>
                                         </div>
                                     </div>
-                            <?php
+                                    <?php
                                 endwhile;
                                 wp_reset_postdata();
-                            else :
+                            else:
                                 echo '<p style="text-align:center; color:#999;">No jobs found.</p>';
                             endif;
                             ?>
@@ -140,8 +154,11 @@ elseif (get_the_ID() == 10) : ?>
 
                         <!-- Load More Button -->
                         <div class="load-more" style="text-align:center; margin-top:50px;">
-                            <?php if ($jobs_query->max_num_pages > 1) : ?>
-                                <button id="load-more-jobs" data-page="1" data-max-pages="<?php echo $jobs_query->max_num_pages; ?>" data-filter="<?php echo $filter; ?>" style="padding: 10px 20px; background-color: transparent; color: orange; border: 1px solid orange; cursor: pointer;">
+                            <?php if ($jobs_query->max_num_pages > 1): ?>
+                                <button id="load-more-jobs" data-page="1"
+                                    data-max-pages="<?php echo $jobs_query->max_num_pages; ?>"
+                                    data-filter="<?php echo $filter; ?>"
+                                    style="padding: 10px 20px; background-color: transparent; color: orange; border: 1px solid orange; cursor: pointer;">
                                     LOAD MORE JOBS
                                 </button>
                             <?php endif; ?>
@@ -152,17 +169,67 @@ elseif (get_the_ID() == 10) : ?>
             </article>
         </main>
     </div>
-<?php
-else :
+    <?php
+    // === THÊM PHẦN ABOUT (ID = 1076) ===
+elseif (get_the_ID() == 1076): ?>
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main">
+            <article id="post-<?php the_ID(); ?>" <?php post_class('about-page'); ?>>
+
+                <!-- Header giống Jobs: dùng dynamic_sidebar -->
+                <header class="about-header">
+                    <?php dynamic_sidebar('about-header'); ?>
+                    <!-- Kéo nội dung từ widget 'about-header' (banner text/hình) -->
+                </header>
+
+                <!-- About Vision/Mission Section -->
+                <section class="about-vision"
+                    style="display: flex; flex-direction: column; align-items: center; margin: 0 auto; padding: 60px 20px; background: #f2f2f2;">
+                    <h2 style="text-align: center; font-size: 36px; color: #333; margin-bottom: 40px; font-weight: bold;">
+                        ABOUT US</h2> <!-- Center title, giống ảnh -->
+                    <div class="about-vision-content"
+                        style="display: flex; max-width: 1200px; gap: 40px; align-items: center; width: 100%;">
+                        <div class="about-image" style="flex: 1; text-align: center;">
+                            <?php dynamic_sidebar('about-image'); ?> <!-- Hình torii gate từ widget -->
+                        </div>
+                        <div class="about-text" style="flex: 1;">
+                            <?php dynamic_sidebar('about-vision-mission'); ?> <!-- Text Vision/Mission từ widget -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Business Section (Hotels, etc.) -->
+                <section class="about-business" style="background: #fff; padding: 60px 20px; text-align: center;">
+                    <div class="container" style="  margin: 0 auto;">
+                        <?php dynamic_sidebar('about-business'); ?> <!-- Widget cho text mô tả business -->
+                    </div>
+                </section>
+
+                <!-- Team/Office Section -->
+                <section class="about-team"
+                    style="display: flex;   margin: 0 auto; padding: 60px 190px; gap: 40px; align-items: center; background:  #f2f2f2;">
+                    <div class="team-info" style="flex: 1; text-align: center;">
+                        <?php dynamic_sidebar('about-team'); ?>
+                    </div>
+                    <div class="team-image" style="flex: 1; text-align: center;">
+                        <?php dynamic_sidebar('about-team-image'); ?>
+                    </div>
+                </section>
+
+            </article>
+        </main>
+    </div>
+    <?php
+else:
     // Load nội dung trang bình thường như theme gốc
-?>
+    ?>
     <div id="primary" class="content-area">
         <main id="main" class="site-main">
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
             </article>
         </main>
     </div>
-<?php
+    <?php
 endif;
 ?>
 
