@@ -299,8 +299,9 @@ function load_all_jobs()
 	$jobs_query = new WP_Query($args);
 
 	$html = '';
-	if ($jobs_query->have_posts()) :
-		while ($jobs_query->have_posts()) : $jobs_query->the_post();
+	if ($jobs_query->have_posts()):
+		while ($jobs_query->have_posts()):
+			$jobs_query->the_post();
 			$company_logo = function_exists('get_the_company_logo') ? get_the_company_logo() : '';
 			$job_location = get_post_meta(get_the_ID(), '_job_location', true) ?: 'Ho Chi Minh City';
 			$job_type_terms = wp_get_post_terms(get_the_ID(), 'job_listing_type', array('fields' => 'names'));
@@ -323,13 +324,13 @@ function load_all_jobs()
 			}
 
 			ob_start();
-?>
+			?>
 			<div class="top-job-card">
 				<div class="top-job-card-header">
 					<div class="top-job-logo">
-						<?php if ($company_logo) : ?>
+						<?php if ($company_logo): ?>
 							<img src="<?php echo esc_url($company_logo); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
-						<?php else : ?>
+						<?php else: ?>
 							<div class="logo-placeholder">
 								<i class="fas fa-briefcase"></i>
 							</div>
@@ -348,12 +349,12 @@ function load_all_jobs()
 					</div>
 				</div>
 				<ul class="top-job-bullets">
-					<?php foreach ($bullets as $bullet) : ?>
+					<?php foreach ($bullets as $bullet): ?>
 						<li><?php echo esc_html($bullet); ?></li>
 					<?php endforeach; ?>
 				</ul>
 			</div>
-<?php
+			<?php
 			$html .= ob_get_clean();
 		endwhile;
 		wp_reset_postdata();
@@ -424,35 +425,41 @@ function jobscout_register_about_sidebars()
 add_action('widgets_init', 'jobscout_register_about_sidebars');
 
 // Thêm chữ "SEARCH JOB" vào nút tìm kiếm banner home
-function jobscout_add_search_button_text() {
-    ?>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const submitBtn = document.querySelector('.banner-caption .jobscout_job_filters .search_jobs input[type="submit"]');
-        if (submitBtn) {
-            submitBtn.value = 'SEARCH JOB'; // gán chữ bạn muốn
-        }
-    });
-    </script>
-    <?php
+function jobscout_add_search_button_text()
+{
+	?>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const submitBtn = document.querySelector('.banner-caption .jobscout_job_filters .search_jobs input[type="submit"]');
+			if (submitBtn) {
+				submitBtn.value = 'SEARCH JOB'; // gán chữ bạn muốn
+			}
+		});
+	</script>
+	<?php
 }
 add_action('wp_footer', 'jobscout_add_search_button_text');
 
-add_filter( 'job_manager_get_listings_args', function( $args ) {
-    $args['posts_per_page'] = 6; // Số job hiển thị
-    return $args;
+add_filter('job_manager_get_listings_args', function ($args) {
+	$args['posts_per_page'] = 6; // Số job hiển thị
+	return $args;
 });
 // Trang detail post: Chỉ hiện breadcrumb và ẩn post navigation
 // Override breadcrumb để chỉ hiện trên single post
 function jobscout_conditional_breadcrumbs_bar()
 {
-	if (is_single()) {  // Chỉ hiện trên chi tiết bài viết
+	if (is_single() && 'post' === get_post_type()) {  // Chỉ hiện trên single post, không phải page hay custom post type
 		jobscout_breadcrumbs_bar();  // Gọi function breadcrumb gốc
 	}
 }
-remove_action('jobscout_after_header', 'jobscout_breadcrumbs_bar', 30);  // Xóa hook cũ
-add_action('jobscout_after_header', 'jobscout_conditional_breadcrumbs_bar', 30);  // Add hook mới
 
+// Chỉ thực hiện khi theme đã được setup
+function jobscout_modify_breadcrumbs()
+{
+	remove_action('jobscout_after_header', 'jobscout_breadcrumbs_bar', 30);  // Xóa hook cũ
+	add_action('jobscout_after_header', 'jobscout_conditional_breadcrumbs_bar', 30);  // Add hook mới
+}
+add_action('after_setup_theme', 'jobscout_modify_breadcrumbs');
 // Ẩn post navigation trên single post
 function hide_post_navigation_on_single()
 {
