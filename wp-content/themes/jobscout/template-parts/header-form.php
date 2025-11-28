@@ -40,7 +40,7 @@ if( $post_slug ){
         <select id="search_location" name="search_location" value="Area">											
         <option value="">Area</option>											
         <?php foreach ($data as $value) : ?>											
-        <option value="<?php echo $value->location; ?>"><?php echo $value->location; ?></option>											
+          <option value="<?php echo $value->location; ?>"><?php echo $value->location; ?></option>											
         <?php endforeach ?>											
         </select>											          
       </div>											
