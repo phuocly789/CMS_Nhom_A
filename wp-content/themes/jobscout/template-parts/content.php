@@ -7,7 +7,7 @@
  * @package JobScout
  */
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope itemtype="https://schema.org/Blog">
+<article id="post-<?php the_ID(); ?>" <?php post_class('abc'); ?> itemscope itemtype="https://schema.org/Blog">
 	<?php 
         /**
          * @hooked jobscout_post_thumbnail - 10

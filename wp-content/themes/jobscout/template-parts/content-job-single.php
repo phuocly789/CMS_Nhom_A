@@ -4,6 +4,7 @@
  * The template for displaying single job listings.
  * UPDATED VERSION - Please replace the old file content with this.
  */
+$company_logo_url = get_the_company_logo();
 ?>
 
 <div class="job-single-container">
@@ -11,7 +12,7 @@
         <!-- Breadcrumb -->
         <nav class="job-breadcrumb">
                 <a href="<?php echo home_url(); ?>">Home</a> /
-                <a href="<?php echo get_post_type_archive_link('job_listing'); ?>">All Jobs</a> /
+                <a href="<?php echo get_permalink(10); ?>">All Jobs</a> /
                 <span class="current"><?php the_title(); ?></span>
         </nav>
 
@@ -81,27 +82,31 @@
                         <aside class="job-sidebar">
                                 <div class="sidebar-widget">
                                         <h3>Staff Rating</h3>
-                                        <div class="rating-section">
-                                                <div class="rating-stars" title="4.0 out of 5 stars">
-                                                        <span class="star filled">★</span>
-                                                        <span class="star filled">★</span>
-                                                        <span class="star filled">★</span>
-                                                        <span class="star filled">★</span>
-                                                        <span class="star">☆</span>
+                                        <div class="rating-wrapper">
+
+                                                <div class="rating-stars">
+                                                        <i class="star fas fa-star"></i>
+                                                        <i class="star fas fa-star"></i>
+                                                        <i class="star fas fa-star"></i>
+                                                        <i class="star fas fa-star"></i>
+                                                        <i class="star far fa-star"></i>
                                                 </div>
-                                                <div class="rating-score">4.0</div>
+
+                                                <span class="rating-number">4.0</span>
+
                                         </div>
                                 </div>
 
                                 <div class="sidebar-widget">
                                         <h3>Company Photos</h3>
                                         <div class="company-photos">
-                                                <div class="photo-item" style="background-image: url('https://i.ibb.co/L5TzPjQ/sodoh-photo.jpg');">
+                                                <div class="photo-item" style="background-image: url('http://goldviet24k.vn/pic/News/images/tin-khac/loi-chuc-thanh-cong-trong-cong-viec(3).jpg');">
                                                         <div class="photo-overlay">+5</div>
                                                 </div>
                                         </div>
                                 </div>
                         </aside>
+
                 </div>
         </div>
 
