@@ -238,8 +238,7 @@ elseif (get_the_ID() == 10): ?>
                                                     <a href="<?php the_permalink(); ?>" style="text-decoration: none; color: inherit;"><?php the_title(); ?></a>
                                                 </h3>
                                                 <p class="top-job-company-date" style="font-size:14px; color:#666; margin:0 0 10px 0; display:flex; justify-content:space-between; align-items:center;">
-                                                    <span><?php echo esc_html($company_name); ?></span>
-                                                    <span>Created: <?php echo esc_html($post_date); ?> (<?php echo esc_html($posted_ago); ?>)</span>
+                                                    <span>Created: <?php echo esc_html($post_date); ?> </span>
                                                 </p>
 
                                                 <!-- Badges: Category/Type/Location trong khung (như hình, cắt ngắn nếu dài) -->
