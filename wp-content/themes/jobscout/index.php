@@ -14,72 +14,7 @@ get_header(); ?>
 					<?php dynamic_sidebar('news-header'); ?>
 				</header>
 
-				<!-- JOB SEARCH FORM - FIXED VERSION -->
-				<section class="home-job-search" style="background: #fff; padding: 60px 0; text-align: center;">
-					<div class="container" style="max-width: 800px; margin: 0 auto; padding: 0 20px;">
-						<h2 style="font-size: 36px; color: #333; margin-bottom: 20px;">Find Your Dream Job</h2>
-						<p style="font-size: 18px; color: #666; margin-bottom: 40px;">Search thousands of job opportunities</p>
-						
-						<!-- FIXED FORM - USING CORRECT JOBS PAGE URL -->
-						<div class="job-search-form" style="background: #f8f9fa; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-							<?php
-							// FORCE THE CORRECT JOBS PAGE URL
-							$jobs_page_url = home_url('/index.php/jobs-2/');
-							?>
-							
-							<form class="jobscout_job_filters" method="GET" action="<?php echo esc_url($jobs_page_url); ?>">
-								<div class="search_jobs" style="display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap;">
-
-									<div class="search_keywords">
-										<input type="text" id="search_keywords" name="search_keywords" 
-											   placeholder="Search for jobs, companies, skills" 
-											   style="padding: 12px; width: 250px; border: 1px solid #ddd; border-radius: 4px;">
-									</div>
-
-									<div class="search_location">
-										<?php											
-										global $wpdb;											
-										$sql = "SELECT DISTINCT meta_value as location 
-												FROM {$wpdb->postmeta} 
-												WHERE meta_key = '_job_location' 
-												AND meta_value != '' 
-												ORDER BY meta_value";
-										$locations = $wpdb->get_results($sql);
-										?>
-										<select id="search_location" name="search_location" style="padding: 12px; width: 180px; border: 1px solid #ddd; border-radius: 4px;">
-											<option value="">All Areas</option>											
-											<?php foreach ($locations as $location) : ?>											
-												<option value="<?php echo esc_attr($location->location); ?>">
-													<?php echo esc_html($location->location); ?>
-												</option>											
-											<?php endforeach ?>											
-										</select>
-									</div>
-									
-									<div class="search_submit">
-										<input type="submit" value="Search Jobs" 
-											   style="padding: 12px 24px; background: #ff6600; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
-									</div>
-
-								</div>
-							</form>
-							
-							<!-- Debug info -->
-							<div style="margin-top: 15px; font-size: 12px; color: #999;">
-								<strong>Form action:</strong> <?php echo esc_url($jobs_page_url); ?>
-							</div>
-							
-							<!-- Direct link -->
-							<div style="margin-top: 20px;">
-								<a href="<?php echo esc_url($jobs_page_url); ?>" 
-								   style="color: #666; text-decoration: none;">
-								   Or browse all jobs →
-								</a>
-							</div>
-						</div>
-					</div>
-				</section>
-
+			
 				<!-- Blog Section -->
 				<section class="blog-section" style="background:#f8f8f8; padding:40px 0; text-align:center;">
 					<div class="container" style="max-width:1000px; margin:0 auto;">
