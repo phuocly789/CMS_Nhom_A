@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -188,47 +189,80 @@ elseif (get_the_ID() == 10): ?>
                             if ($jobs_query->have_posts()):
                                 while ($jobs_query->have_posts()):
                                     $jobs_query->the_post();
+
+                                    // === SỬA: Logic lấy data giống content-job_listing-custom.php + thêm company name + relative date ===
                                     $company_logo = function_exists('get_the_company_logo') ? get_the_company_logo() : (has_post_thumbnail() ? get_the_post_thumbnail_url() : '');
-                                    $job_title = get_the_title();
-                                    $job_location = get_post_meta(get_the_ID(), '_job_location', true) ?: 'No location';
-                                    $job_terms = wp_get_post_terms(get_the_ID(), 'job_listing_category', array('fields' => 'names'));
-                                    $job_category = (is_array($job_terms)) ? (!empty($job_terms) ? implode(', ', $job_terms) : 'Uncategorized') : 'Uncategorized';
-                                    $job_excerpt = get_the_excerpt() ?: 'No description';
+                                    $company_name = function_exists('get_the_company_name') ? get_the_company_name() : 'Company Name';  // Thêm company name từ WPJM
+                                    $job_location = get_post_meta(get_the_ID(), '_job_location', true) ?: 'Ho Chi Minh City';
+
+                                    $job_type_terms = wp_get_post_terms(get_the_ID(), 'job_listing_type', array('fields' => 'names'));
+                                    $job_type = (!is_wp_error($job_type_terms) && !empty($job_type_terms)) ? $job_type_terms[0] : 'Fulltime';
+
+                                    $job_category_terms = wp_get_post_terms(get_the_ID(), 'job_listing_category', array('fields' => 'names'));
+                                    $job_category = (!is_wp_error($job_category_terms) && !empty($job_category_terms)) ? $job_category_terms[0] : 'Category Name';
+
+                                    $job_excerpt = get_the_excerpt() ?: 'No description available.';
+                                    $post_date = get_the_date('M d, Y');
+                                    $posted_ago = human_time_diff(get_the_time('U'), current_time('timestamp')) . ' ago';  // Tính relative time: "7 years ago"
+
+                                    // Normalize by inserting period before capital letters if stuck (camelcase fix)
+                                    $job_excerpt = preg_replace('/([a-z0-9])([A-Z])/', '$1. $2', trim($job_excerpt));
+
+                                    // Tách excerpt bằng dấu chấm (.) để lấy câu, slice 3 dòng đầu
+                                    $excerpt_parts = explode('.', $job_excerpt);
+                                    $bullets = [];
+                                    foreach ($excerpt_parts as $part) {
+                                        $part = trim($part);
+                                        if ($part && strlen($part) > 10) {  // Filter câu ngắn
+                                            $bullets[] = $part;
+                                        }
+                                    }
+                                    $bullets = array_slice($bullets, 0, 3);  // Giới hạn 3 dòng
+                                    // === END SỬA ===
+
                                     ?>
-                                    <div class="job-card"
-                                        style="background:#fff; padding:25px; border:1px solid #eee; box-shadow:0 2px 10px rgba(0,0,0,0.05); display:flex; gap:20px; align-items:start;">
-                                        <div class="job-logo"
-                                            style="width:80px; height:80px; background:#f0f0f0; display:flex; align-items:center; justify-content:center;">
-                                            <?php if ($company_logo): ?>
-                                                <img src="<?php echo $company_logo; ?>" alt="Logo"
-                                                    style="max-width:100%; max-height:100%;">
-                                            <?php else: ?>
-                                                <i class="fa fa-briefcase" style="font-size:40px; color:#ccc;"></i>
-                                            <?php endif; ?>
+                                    <!-- SỬA: Job card giống hình - logo left, title + date + company, badges, bullets multi-line -->
+                                    <div class="top-job-card" style="background:#fff; padding:25px; border:1px solid #eee; box-shadow:0 2px 10px rgba(0,0,0,0.05); border-radius:8px; display:flex; flex-direction:column;">
+                                        <!-- Header: Logo + Info -->
+                                        <div class="top-job-card-header" style="display:flex; gap:15px; align-items:flex-start; margin-bottom:15px;">
+                                            <div class="top-job-logo" style="width:60px; height:60px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; flex-shrink:0; border-radius:4px; overflow:hidden;">
+                                                <?php if ($company_logo) : ?>
+                                                    <img src="<?php echo esc_url($company_logo); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" style="max-width:100%; max-height:100%; border-radius:4px;">
+                                                <?php else : ?>
+                                                    <i class="fas fa-briefcase" style="font-size:24px; color:#ccc;"></i>
+                                                <?php endif; ?>
+                                            </div>
+
+                                            <div class="top-job-info" style="flex:1;">
+                                                <h3 class="top-job-title" style="font-size:20px; color:#333; margin:0 0 5px 0; line-height:1.2;">
+                                                    <a href="<?php the_permalink(); ?>" style="text-decoration: none; color: inherit;"><?php the_title(); ?></a>
+                                                </h3>
+                                                <p class="top-job-company-date" style="font-size:14px; color:#666; margin:0 0 10px 0; display:flex; justify-content:space-between; align-items:center;">
+                                                    <span><?php echo esc_html($company_name); ?></span>
+                                                    <span>Created: <?php echo esc_html($post_date); ?> (<?php echo esc_html($posted_ago); ?>)</span>
+                                                </p>
+
+                                                <!-- Badges: Category/Type/Location trong khung (như hình, cắt ngắn nếu dài) -->
+                                                <div class="top-job-meta" style="margin-bottom:15px;">
+                                                    <span class="meta-badge" style="padding:6px 12px; background:#e9ecef; color:#495057; font-size:12px;  font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:145px; border-right: 0px solid #D0D0D0 !important;"><?php echo esc_html(substr($job_category, 0, 15) . (strlen($job_category) > 15 ? '...' : '')); ?></span>
+                                                    <span class="meta-badge" style="padding:6px 12px; background:#e9ecef; color:#495057; font-size:12px;  font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:145px; border-right: 0px solid #D0D0D0 !important;"><?php echo esc_html(substr($job_type, 0, 15) . (strlen($job_type) > 15 ? '...' : '')); ?></span>
+                                                    <span class="meta-badge" style="padding:6px 12px; background:#e9ecef; color:#495057; font-size:12px;  font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:145px; border-right: 0px solid #D0D0D0 !important;"><?php echo esc_html(substr($job_location, 0, 15) . (strlen($job_location) > 15 ? '...' : '')); ?></span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="job-content" style="flex:1;">
-                                            <h3 style="font-size:22px; color:#333; margin:0 0 10px 0;">
-                                                <a href="<?php the_permalink(); ?>" style="text-decoration: none; color: inherit;">
-                                                    <?php echo $job_title; ?>
-                                                </a>
-                                            </h3>
-                                            <p style="font-size:16px; color:#666; margin:0 0 10px 0;">
-                                                <?php echo $job_category; ?> / <?php echo $job_location; ?>
-                                            </p>
-                                            <p style="font-size:15px; color:#555; line-height:1.6; margin:0;">
-                                                <?php echo wp_trim_words($job_excerpt, 30); ?>
-                                            </p>
-                                        </div>
-                                        <ul style="height: fit-content; list-style-type:disc; padding-left:20px; margin:0; font-size:14px; color:#555; line-height:1.6;">
-                                            <?php if (!empty($excerpt_lines)): ?>
-                                                <?php foreach ($excerpt_lines as $line): ?>
-                                                    <li><?php echo esc_html($line); ?></li>
+
+                                        <!-- Description: Bullets multi-line (cắt sau dấu chấm, nhiều dòng) -->
+                                        <ul class="top-job-bullets" style="list-style-type:disc; padding-left:20px; margin:0; font-size:14px; color:#555; line-height:1.6;">
+                                            <?php if (!empty($bullets)) : ?>
+                                                <?php foreach ($bullets as $bullet) : ?>
+                                                    <li style="margin-bottom:8px; word-wrap:break-word;"><?php echo esc_html($bullet); ?></li>
                                                 <?php endforeach; ?>
-                                            <?php else: ?>
-                                                <li>No description available</li>
+                                            <?php else : ?>
+                                                <li style="margin-bottom:8px;">No description available</li>
                                             <?php endif; ?>
                                         </ul>
                                     </div>
+                                    <!-- END SỬA -->
                             <?php
                                 endwhile;
                                 wp_reset_postdata();
