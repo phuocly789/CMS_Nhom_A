@@ -7612,7 +7612,7 @@ RESPONSIVE STYLESHEET
   }
 
   #job-manager-job-dashboard .job-manager-jobs tr td::before {
-    content: ""attr(data-title) "";
+    content: "" attr(data-title) "";
     font-weight: 700;
     position: absolute;
     top: 0;
@@ -8721,9 +8721,7 @@ body {
 .job-content-main {}
 
 /* Left column */
-.job-sidebar {
-  
-}
+.job-sidebar {}
 
 /* Right column */
 
@@ -8757,7 +8755,7 @@ body {
 }
 
 /* Sao đầy */
-.rating-stars .star{
+.rating-stars .star {
   color: #ff7a00 !important;
   font-size: 22px;
 }
@@ -9608,6 +9606,7 @@ input[type="email"] {
 .hentry {
   margin-bottom: 0 !important;
 }
+
 /* Ẩn sidebar trên single post/blog chi tiết */
 .single .widget-area,
 .single #secondary {
