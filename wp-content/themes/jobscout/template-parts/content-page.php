@@ -120,7 +120,11 @@ elseif (get_the_ID() == 10) : ?>
                                             <?php if ($company_logo) : ?><img src="<?php echo $company_logo; ?>" alt="Logo" style="max-width:100%; max-height:100%;"><?php else : ?><i class="fa fa-briefcase" style="font-size:40px; color:#ccc;"></i><?php endif; ?>
                                         </div>
                                         <div class="job-content" style="flex:1;">
-                                            <h3 style="font-size:22px; color:#333; margin:0 0 10px 0;"><?php echo $job_title; ?></h3>
+                                            <h3 style="font-size:22px; color: black; margin:0 0 10px 0;">
+                                                <a href="<?php the_permalink(); ?>" class="job-title-link" style="color: black !important;">
+                                                    <?php echo esc_html($job_title); ?>
+                                                </a>
+                                            </h3>
                                             <p style="font-size:16px; color:#666; margin:0 0 10px 0;"><?php echo $job_category; ?> / <?php echo $job_location; ?></p>
                                             <p style="font-size:15px; color:#555; line-height:1.6; margin:0;"><?php echo wp_trim_words($job_excerpt, 30); ?></p>
                                         </div>
