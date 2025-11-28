@@ -246,6 +246,7 @@ function load_more_jobs()
 add_action('wp_ajax_load_more_jobs', 'load_more_jobs');
 add_action('wp_ajax_nopriv_load_more_jobs', 'load_more_jobs');
 
+
 // Enqueue JS cho nút "View All Jobs" ở homepage
 function jobscout_enqueue_view_all_jobs_script()
 {
@@ -441,4 +442,36 @@ add_filter( 'job_manager_get_listings_args', function( $args ) {
     $args['posts_per_page'] = 6; // Số job hiển thị
     return $args;
 });
+// Trang detail post: Chỉ hiện breadcrumb và ẩn post navigation
+// Override breadcrumb để chỉ hiện trên single post
+function jobscout_conditional_breadcrumbs_bar()
+{
+	if (is_single()) {  // Chỉ hiện trên chi tiết bài viết
+		jobscout_breadcrumbs_bar();  // Gọi function breadcrumb gốc
+	}
+}
+remove_action('jobscout_after_header', 'jobscout_breadcrumbs_bar', 30);  // Xóa hook cũ
+add_action('jobscout_after_header', 'jobscout_conditional_breadcrumbs_bar', 30);  // Add hook mới
 
+// Ẩn post navigation trên single post
+function hide_post_navigation_on_single()
+{
+	if (is_single()) {
+		remove_action('jobscout_after_post_content', 'jobscout_navigation', 10);  // Xóa hook navigation (dựa trên template-functions.php)
+	}
+}
+add_action('wp', 'hide_post_navigation_on_single');
+
+function remove_video_from_content($content)
+{
+	// Xoá các iframe (video YouTube / Vimeo embed)
+	$content = preg_replace('/<iframe.*?<\/iframe>/is', '', $content);
+
+	// Xoá thẻ <video> nếu có
+	$content = preg_replace('/<video.*?<\/video>/is', '', $content);
+
+	// Xoá URL YouTube dạng plain text tự embed
+	$content = preg_replace('/https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/[^\s]+/i', '', $content);
+
+	return $content;
+}
