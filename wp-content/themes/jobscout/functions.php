@@ -240,3 +240,16 @@ function load_more_jobs()
 }
 add_action('wp_ajax_load_more_jobs', 'load_more_jobs');
 add_action('wp_ajax_nopriv_load_more_jobs', 'load_more_jobs');
+function remove_video_from_content($content)
+{
+	// Xoá các iframe (video YouTube / Vimeo embed)
+	$content = preg_replace('/<iframe.*?<\/iframe>/is', '', $content);
+
+	// Xoá thẻ <video> nếu có
+	$content = preg_replace('/<video.*?<\/video>/is', '', $content);
+
+	// Xoá URL YouTube dạng plain text tự embed
+	$content = preg_replace('/https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/[^\s]+/i', '', $content);
+
+	return $content;
+}

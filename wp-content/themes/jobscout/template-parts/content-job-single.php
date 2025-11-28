@@ -62,7 +62,8 @@
                                 <section class="content-section">
                                         <h2>Overview about Company</h2>
                                         <div class="section-content">
-                                                <?php the_content(); ?>
+                                                <?php echo remove_video_from_content(get_the_content()); ?>
+
                                         </div>
                                 </section>
 
