@@ -68,6 +68,7 @@
                  * @hooked jobscout_post_thumbnail - 15
                  */
                 do_action('jobscout_before_single_post_entry_content');
+                echo '<style>.content-details-blogs .post-thumbnail { display: none !important; }</style>';
 
                 /**
                  * @hooked jobscout_entry_content - 15
