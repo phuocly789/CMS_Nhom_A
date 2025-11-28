@@ -445,6 +445,7 @@ add_filter('job_manager_get_listings_args', function ($args) {
 	return $args;
 });
 // Trang detail post: Chỉ hiện breadcrumb và ẩn post navigation
+
 // Override breadcrumb để chỉ hiện trên single post
 function jobscout_conditional_breadcrumbs_bar()
 {
