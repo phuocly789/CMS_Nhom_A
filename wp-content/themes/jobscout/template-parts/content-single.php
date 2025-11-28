@@ -94,27 +94,6 @@
             );
             $recent_posts = new WP_Query($recent_args);
 
-            if ($recent_posts->have_posts()):
-                while ($recent_posts->have_posts()):
-                    $recent_posts->the_post();
-                    $excerpt = wp_trim_words(get_the_excerpt(), 20, '...');  // Giới hạn ~100 ký tự
-                    echo '<div class="recent-post-item" style="display: flex; flex-direction: column; gap: 10px; border: 1px solid #eee; padding: 15px; border-radius: 4px; background: #f9f9f9; height: 281px;">';
-                    if (has_post_thumbnail()) {
-                        echo '<div style="width: 100%; height: 150px; overflow: hidden; border-radius: 4px;">';
-                        the_post_thumbnail('medium', array('style' => 'width: 100%; height: 100%; object-fit: cover;'));
-                        echo '</div>';
-                    }
-                    echo '<div style="flex: 1; display: flex; flex-direction: column;">';
-                    echo '<h4 style="font-size: 14px; color: #333; margin: 0 0 5px 0; line-height: 1.3;">' . get_the_title() . '</h4>';
-                    echo '<p style="font-size: 12px; color: #666; margin: 0 0 10px 0; line-height: 1.4; flex: 1;">' . $excerpt . '</p>';
-                    echo '<a href="' . get_permalink() . '" style="font-weight: 800; font-size: 12px; color: #17d475ff; text-decoration: none;">Read MORE</a>';
-                    echo '</div>';
-                    echo '</div>';
-                endwhile;
-                wp_reset_postdata();
-            else:
-                echo '<p style="color: #999; font-style: italic; text-align: center;">No recent posts.</p>';
-            endif;
             ?>
         </div>
     </aside>
