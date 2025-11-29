@@ -232,7 +232,7 @@ function load_more_jobs()
 			}
 			$excerpt_lines = array_slice($excerpt_lines, 0, 3); // Chỉ lấy 3 câu đầu tiên
 
-			$html .= '<div class="job-card" style="background:#fff; padding:20px; border:1px solid #eee; box-shadow:0 2px 10px rgba(0,0,0,0.05); display:flex; gap:20px; align-items:flex-start; max-width:600px; flex-wrap: wrap;">';
+			$html .= '<div class="job-card" style="background:#fff; padding:20px; border:1px solid #eee; box-shadow:0 2px 10px rgba(0,0,0,0.05); display:flex; gap:20px; align-items:flex-start; max-width:600px; flex-wrap: wrap; height: fit-content;">';
 			$html .= '	<div style="display: flex; justify-content: center; align-items: center;width: 100%;">';
 			$html .= '		<div class="job-logo" style="width:100px; height:auto; display:flex; align-items:center; justify-content:center;">';
 			if ($company_logo):
@@ -241,7 +241,7 @@ function load_more_jobs()
 				$html .= '			<i class="fa fa-briefcase" style="font-size:40px; color:#ccc;"></i>';
 			endif;
 			$html .= '		</div>';
-			$html .= '		<div class="job-content" style="flex:1;">';
+			$html .= '		<div class="job-content" style="flex:1; margin-left: 20px;">';
 			$html .= '			<h3 style="font-size:24px; color:#333; margin:0 0 5px 0; text-transform:uppercase;">';
 			$html .= '				<a href="' . get_the_permalink() . '" class="job-title-link" style="color:#333 !important; text-decoration:none;">';
 			$html .= '					' . esc_html($job_title);
