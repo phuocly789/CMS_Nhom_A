@@ -147,6 +147,21 @@ elseif (get_the_ID() == 10): ?>
                                 'paged' => $paged,
                             );
 
+                            // ADD SEARCH FILTERS
+                            if (isset($_GET['search_keywords']) && !empty($_GET['search_keywords'])) {
+                                $args['s'] = sanitize_text_field($_GET['search_keywords']);
+                            }
+
+                            if (isset($_GET['search_location']) && !empty($_GET['search_location'])) {
+                                $args['meta_query'] = array(
+                                    array(
+                                        'key' => '_job_location',
+                                        'value' => sanitize_text_field($_GET['search_location']),
+                                        'compare' => 'LIKE'
+                                    )
+                                );
+                            }
+
                             // Áp dụng filter default
                             if ($filter == 'latest') {
                                 $args['orderby'] = 'date';
@@ -172,58 +187,65 @@ elseif (get_the_ID() == 10): ?>
                             if ($jobs_query->have_posts()):
                                 while ($jobs_query->have_posts()):
                                     $jobs_query->the_post();
-                                    // Code job-card giống trước (lặp lại để đầy đủ)
+
+                                    // Lấy dữ liệu job
                                     $company_logo = function_exists('get_the_company_logo') ? get_the_company_logo() : (has_post_thumbnail() ? get_the_post_thumbnail_url() : '');
-                                    $job_title = get_the_title();
-                                    $job_location = get_post_meta(get_the_ID(), '_job_location', true) ?: 'No location';
-                                    $job_terms = wp_get_post_terms(get_the_ID(), 'job_listing_category', array('fields' => 'names'));
-                                    $job_category = (is_array($job_terms)) ? (!empty($job_terms) ? implode(', ', $job_terms) : 'Uncategorized') : 'Uncategorized';
-                                    $job_excerpt = get_the_excerpt() ?: 'No description';
-                                    $created_date = get_the_date('M d, Y'); // Lấy ngày tạo bài viết
-                                    $job_type_terms = wp_get_post_terms(get_the_ID(), 'job_listing_type', array('fields' => 'names')); // Giả sử sử dụng taxonomy job_listing_type cho loại việc làm
-                                    $job_type = !empty($job_type_terms) ? implode(', ', $job_type_terms) : 'Fulltime'; // Default nếu không có
-                                    // Để hiển thị excerpt dưới dạng bullet points, tách bằng dấu chấm (.) để lấy câu
-                                    $excerpt_parts = explode('.', trim($job_excerpt));
-                                    $excerpt_lines = [];
+                                    $company_name = function_exists('get_the_company_name') ? get_the_company_name() : 'Company Name';
+                                    $job_location = get_post_meta(get_the_ID(), '_job_location', true) ?: 'Ho Chi Minh City';
+
+                                    $job_type_terms = wp_get_post_terms(get_the_ID(), 'job_listing_type', array('fields' => 'names'));
+                                    $job_type = (!is_wp_error($job_type_terms) && !empty($job_type_terms)) ? $job_type_terms[0] : 'Fulltime';
+
+                                    $job_category_terms = wp_get_post_terms(get_the_ID(), 'job_listing_category', array('fields' => 'names'));
+                                    $job_category = (!is_wp_error($job_category_terms) && !empty($job_category_terms)) ? $job_category_terms[0] : 'Category Name';
+
+                                    $job_excerpt = get_the_excerpt() ?: 'No description available.';
+                                    $post_date = get_the_date('M d, Y');
+
+                                    // Xử lý excerpt thành bullet points
+                                    $job_excerpt = preg_replace('/([a-z0-9])([A-Z])/', '$1. $2', trim($job_excerpt));
+                                    $excerpt_parts = explode('.', $job_excerpt);
+                                    $bullets = [];
                                     foreach ($excerpt_parts as $part) {
                                         $part = trim($part);
-                                        if ($part) {
-                                            $excerpt_lines[] = $part;
+                                        if ($part && strlen($part) > 10) {
+                                            $bullets[] = $part;
                                         }
                                     }
-                                    $excerpt_lines = array_slice($excerpt_lines, 0, 3); // Chỉ lấy 3 câu đầu tiên
+                                    $bullets = array_slice($bullets, 0, 3);
                             ?>
-                                    <div class="job-card" style="background:#fff; padding:20px; border:1px solid #eee; box-shadow:0 2px 10px rgba(0,0,0,0.05); display:flex; gap:20px; align-items:flex-start; max-width:600px; flex-wrap: wrap;">
+                                    <!-- JOB CARD - GIỐNG VỚI MẪU YÊU CẦU -->
+                                    <div class="job-card" style="flex-wrap: wrap; height: fit-content; background:#fff; padding:20px; border:1px solid #eee; box-shadow:0 2px 10px rgba(0,0,0,0.05); display:flex; gap:20px; align-items:flex-start;">
                                         <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
-                                            <div class="job-logo" style="width:100px; height:auto; display:flex; align-items:center; justify-content:center;">
-                                                <?php if ($company_logo): ?>
-                                                    <img src="<?php echo esc_url($company_logo); ?>" alt="<?php echo esc_attr($job_title); ?>" style="max-width:100%;">
-                                                <?php else: ?>
+                                            <div class="job-logo" style="width:100px; height:auto; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                                <?php if ($company_logo) : ?>
+                                                    <img src="<?php echo esc_url($company_logo); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" style="max-width:100%;">
+                                                <?php else : ?>
                                                     <i class="fa fa-briefcase" style="font-size:40px; color:#ccc;"></i>
                                                 <?php endif; ?>
                                             </div>
-                                            <div class="job-content" style="flex:1;">
+                                            <div class="job-content" style="flex:1; margin-left: 20px;">
                                                 <h3 style="font-size:24px; color:#333; margin:0 0 5px 0; text-transform:uppercase;">
                                                     <a href="<?php the_permalink(); ?>" class="job-title-link" style="color:#333 !important; text-decoration:none;">
-                                                        <?php echo esc_html($job_title); ?>
+                                                        <?php the_title(); ?>
                                                     </a>
                                                 </h3>
                                                 <p style="font-size:14px; color:#666; margin:0 0 10px 0;">
-                                                    Created: <?php echo esc_html($created_date); ?>
+                                                    Created: <?php echo esc_html($post_date); ?>
                                                 </p>
-                                                <div class="top-job-meta">
+                                                <div class="top-job-meta" style="border-radius: 0 !important;">
                                                     <span class="meta-badge"><?php echo esc_html($job_type); ?></span>
                                                     <span class="meta-badge"><?php echo esc_html($job_category); ?></span>
                                                     <span class="meta-badge"><?php echo esc_html($job_location); ?></span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <ul style="list-style-type:disc; padding-left:20px; margin:0; font-size:14px; color:#555; line-height:1.6; height: fit-content;">
-                                            <?php if (!empty($excerpt_lines)): ?>
-                                                <?php foreach ($excerpt_lines as $line): ?>
-                                                    <li><?php echo esc_html($line); ?></li>
+                                        <ul style="list-style-type:disc; padding-left:20px; margin:0; font-size:14px; color:#555; line-height:1.6;">
+                                            <?php if (!empty($bullets)) : ?>
+                                                <?php foreach ($bullets as $bullet) : ?>
+                                                    <li><?php echo esc_html($bullet); ?></li>
                                                 <?php endforeach; ?>
-                                            <?php else: ?>
+                                            <?php else : ?>
                                                 <li>No description available</li>
                                             <?php endif; ?>
                                         </ul>
@@ -232,7 +254,14 @@ elseif (get_the_ID() == 10): ?>
                                 endwhile;
                                 wp_reset_postdata();
                             else:
-                                echo '<p style="text-align:center; color:#999;">No jobs found.</p>';
+                                echo '<div style="grid-column: 1 / -1; text-align:center; padding:40px; color:#999;">';
+                                echo '<h3>No jobs found</h3>';
+                                if ($is_searching) {
+                                    echo '<p>Try adjusting your search criteria or <a href="' . esc_url(get_permalink(10)) . '">browse all jobs</a>.</p>';
+                                } else {
+                                    echo '<p>No job listings available at the moment.</p>';
+                                }
+                                echo '</div>';
                             endif;
                             ?>
                         </div>
